@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CommunityHost", "CommunityHost\CommunityHost.vcxproj", "{24DDFBD8-00C1-4AD9-8956-5A45E1CC4F86}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CommunityClient", "CommunityClient\CommunityClient.vcxproj", "{676180E9-8A33-4816-BF31-68F6D8CABB2C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CommunityLib", "CommunityLib\CommunityLib.vcxproj", "{22B14069-89B6-4A6E-B4C7-44D08DDF9511}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{24DDFBD8-00C1-4AD9-8956-5A45E1CC4F86}.Debug|Win32.ActiveCfg = Debug|Win32
+		{24DDFBD8-00C1-4AD9-8956-5A45E1CC4F86}.Debug|Win32.Build.0 = Debug|Win32
+		{24DDFBD8-00C1-4AD9-8956-5A45E1CC4F86}.Release|Win32.ActiveCfg = Release|Win32
+		{24DDFBD8-00C1-4AD9-8956-5A45E1CC4F86}.Release|Win32.Build.0 = Release|Win32
+		{676180E9-8A33-4816-BF31-68F6D8CABB2C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{676180E9-8A33-4816-BF31-68F6D8CABB2C}.Debug|Win32.Build.0 = Debug|Win32
+		{676180E9-8A33-4816-BF31-68F6D8CABB2C}.Release|Win32.ActiveCfg = Release|Win32
+		{676180E9-8A33-4816-BF31-68F6D8CABB2C}.Release|Win32.Build.0 = Release|Win32
+		{22B14069-89B6-4A6E-B4C7-44D08DDF9511}.Debug|Win32.ActiveCfg = Debug|Win32
+		{22B14069-89B6-4A6E-B4C7-44D08DDF9511}.Debug|Win32.Build.0 = Debug|Win32
+		{22B14069-89B6-4A6E-B4C7-44D08DDF9511}.Release|Win32.ActiveCfg = Release|Win32
+		{22B14069-89B6-4A6E-B4C7-44D08DDF9511}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

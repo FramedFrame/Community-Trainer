@@ -9,7 +9,7 @@ namespace Network
 class _Server
 {
 public:
-	_Server(std::function<void(LibSocket::Session&)> funAccept,LibSocket::ServiceProvider& serviceProvider);
+	_Server(const std::function<void(LibSocket::Session&)>& funAccept,LibSocket::ServiceProvider& serviceProvider);
 	~_Server(void);
 
 	void Start();

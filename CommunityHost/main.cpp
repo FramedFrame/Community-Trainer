@@ -1,18 +1,20 @@
-#include <LibSocket.h>
+
 #include <functional>
 #include <Windows.h>
 #include <memory>
 #include <vector>
+#include <unordered_map>
 
+#include "CommunityLib\Detour.h"
+#include "CommunityLib\LibSocket.h"
 
-std::vector<LibSocket::Session*> vSessions;
 
 int StartUp()
 {
 	AllocConsole();
 	AttachConsole(GetCurrentProcessId());
 
-		FILE* fp = NULL;
+	FILE* fp = NULL;
 	freopen_s(&fp, "CON", "w", stdout);
 	freopen_s(&fp, "CON", "w", stderr);
 
@@ -22,6 +24,8 @@ int StartUp()
 
 	return 1;
 }
+
+std::vector<LibSocket::Session*> vSessions;
 
 void OnDisconnect2()
 {
@@ -44,6 +48,7 @@ void accept_socket(LibSocket::Session& session)
 	session.LinkFunctions(ff,fff);
 	session.Start();
 }
+
 
 
 

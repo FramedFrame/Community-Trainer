@@ -39,7 +39,7 @@ public:
 	Session(void* pBase);
 	~Session(void);
 
-	void LinkFunctions(std::function<void(std::vector<uint8_t>&)>& funOnData,std::function<void()>& funOnDisconnect);
+	void LinkFunctions(std::function<void(std::vector<uint8_t>&)> funOnData,std::function<void()> funOnDisconnect);
 
 	void StartConnect();
 

@@ -31,7 +31,7 @@ _Session::~_Session(void)
 	this->m_ptrSocket.reset();
 
 }
-void _Session::LinkFunctions(std::function<void(std::vector<uint8_t>&)>& funOnData,std::function<void()>& funOnDisconnect)
+void _Session::LinkFunctions(const std::function<void(std::vector<uint8_t>&)>& funOnData,const std::function<void()>& funOnDisconnect)
 {
 	this->m_funOnData = funOnData;
 	this->m_funOnDisconnect = funOnDisconnect;
@@ -80,7 +80,6 @@ void _Session::Send(std::vector<uint8_t>& vBuffer)
 void _Session::SendRaw(std::vector<uint8_t>& vBuffer)
 {
 	auto vSendBuffer = new std::vector<uint8_t>(vBuffer.begin(),vBuffer.end());
-
 	this->m_ptrSocket->async_send(boost::asio::buffer(*vSendBuffer),boost::bind(&_Session::handle_write,
 		this,boost::asio::placeholders::error,vSendBuffer));
 }
@@ -128,8 +127,15 @@ void _Session::handle_read(const boost::system::error_code& error,size_t bytes_t
 
 	if(!error && !this->m_fStop && bytes_transferred)
 	{
+
 		if(this->m_writeState != WRITE_STATE::HEADER)
+		{
 			this->m_funOnData(this->m_vBuffer);
+		}
+		else
+		{
+			this->m_header = *reinterpret_cast<header_t*>(this->m_vBuffer.data());
+		}
 
 		this->NextState();
 

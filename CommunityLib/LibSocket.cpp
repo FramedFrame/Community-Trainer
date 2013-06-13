@@ -22,7 +22,7 @@ Session::~Session(void)
 	delete pSess;
 }
 
-void Session::LinkFunctions(std::function<void(std::vector<uint8_t>&)>& funOnData,std::function<void()>& funOnDisconnect)
+void Session::LinkFunctions(std::function<void(std::vector<uint8_t>&)> funOnData,std::function<void()> funOnDisconnect)
 {
 	auto pSess = CAST_LOW(Network::_Session);
 	pSess->LinkFunctions(funOnData,funOnDisconnect);

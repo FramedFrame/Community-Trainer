@@ -10,44 +10,20 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Accessor.h" />
-    <ClInclude Include="Detour.h" />
-    <ClInclude Include="Disassembler.h" />
-    <ClInclude Include="Dispatcher.h" />
-    <ClInclude Include="LibSocket.h" />
-    <ClInclude Include="Network.h" />
-    <ClInclude Include="PatternScanner.h" />
-    <ClInclude Include="Server.h" />
-    <ClInclude Include="Session.h" />
-    <ClInclude Include="Singleton.h" />
-    <ClInclude Include="ToogleAble.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Accessor.cpp" />
-    <ClCompile Include="Detour.cpp" />
-    <ClCompile Include="Disassembler.cpp" />
-    <ClCompile Include="Dispatcher.cpp" />
-    <ClCompile Include="LibSocket.cpp" />
-    <ClCompile Include="PatternScanner.cpp" />
-    <ClCompile Include="Server.cpp" />
-    <ClCompile Include="Session.cpp" />
-    <ClCompile Include="ToogleAble.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{22B14069-89B6-4A6E-B4C7-44D08DDF9511}</ProjectGuid>
+    <ProjectGuid>{5A1F4C74-5C55-4C33-8CDE-E90E64A78251}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>CommunityLib</RootNamespace>
+    <RootNamespace>Test</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v110</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -64,12 +40,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>F:\Projects-External\Detours\include;F:\Projects-External\udis86\BuildVS2010\Build\Include;F:\Projects-External\Boost\boost_1_53_0;$(IncludePath)</IncludePath>
-    <LibraryPath>F:\Projects-External\Detours\lib.X86;F:\Projects-External\udis86\BuildVS2010\Build\Lib\Debug\x86;F:\Projects-External\Boost\boost_1_53_0\libs;$(LibraryPath)</LibraryPath>
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>F:\Projects-External\Boost\boost_1_53_0;F:\Projects-External\ChaiScript\include;$(IncludePath)</IncludePath>
+    <LibraryPath>F:\Projects-External\Boost\boost_1_53_0\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>F:\Projects-External\Detours\include;F:\Projects-External\udis86\BuildVS2010\Build\Include;F:\Projects-External\Boost\boost_1_53_0;$(IncludePath)</IncludePath>
-    <LibraryPath>F:\Projects-External\Detours\lib.X86;F:\Projects-External\udis86\BuildVS2010\Build\Lib\x86;F:\Projects-External\Boost\boost_1_53_0\libs;$(LibraryPath)</LibraryPath>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -77,16 +53,14 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <Lib>
-      <AdditionalDependencies>libudis86.lib;detours.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -96,19 +70,24 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
-    <Lib>
-      <AdditionalDependencies>libudis86.lib;detours.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Lib>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Testish.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="any.h" />
+    <ClInclude Include="Testish.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

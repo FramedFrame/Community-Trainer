@@ -7,7 +7,7 @@ using namespace Network;
 using namespace boost;
 using namespace boost::asio;
 
-_Server::_Server(std::function<void(LibSocket::Session&)> funAccept,LibSocket::ServiceProvider& serviceProvider) :
+_Server::_Server(const std::function<void(LibSocket::Session&)>& funAccept,LibSocket::ServiceProvider& serviceProvider) :
 	m_ioService(*reinterpret_cast<io_service*>(serviceProvider())),
 	m_acceptor(*reinterpret_cast<io_service*>(serviceProvider()),ip::tcp::endpoint(ip::tcp::v4(),Network::PORT))
 {

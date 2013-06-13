@@ -41,13 +41,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>G:\backup\Projects\CommunityProject\CommunityLib\include;$(IncludePath)</IncludePath>
-    <LibraryPath>G:\backup\Projects\CommunityProject\Debug;F:\Projects-External\Boost\boost_1_53_0\stage\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Home\Documents\Community-Trainer\CommunityLib\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Home\Documents\Community-Trainer\Debug;F:\Projects-External\Boost\boost_1_53_0\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>G:\backup\Projects\CommunityProject\CommunityLib\include;$(IncludePath)</IncludePath>
-    <LibraryPath>F:\Projects-External\Boost\boost_1_53_0\stage\lib;G:\backup\Projects\CommunityProject\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Home\Documents\Community-Trainer\CommunityLib\include;$(IncludePath)</IncludePath>
+    <LibraryPath>F:\Projects-External\Boost\boost_1_53_0\stage\lib;C:\Users\Home\Documents\Community-Trainer\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

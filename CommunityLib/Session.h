@@ -16,7 +16,7 @@ public:
 	_Session(LibSocket::ServiceProvider& serviceProvider);
 	~_Session(void);
 
-	void LinkFunctions(std::function<void(std::vector<uint8_t>&)>& funOnData,std::function<void()>& funOnDisconnect);
+	void LinkFunctions(const std::function<void(std::vector<uint8_t>&)>& funOnData,const std::function<void()>& funOnDisconnect);
 
 	void StartConnect();
 

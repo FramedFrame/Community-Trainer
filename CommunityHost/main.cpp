@@ -1,13 +1,9 @@
-
-#include <functional>
+#include <iostream>
 #include <Windows.h>
-#include <memory>
-#include <vector>
-#include <unordered_map>
 
-#include "CommunityLib\Detour.h"
-#include "CommunityLib\LibSocket.h"
+#include <nana\gui\wvl.hpp>
 
+#include "MainWindow.h"
 
 int StartUp()
 {
@@ -25,45 +21,15 @@ int StartUp()
 	return 1;
 }
 
-std::vector<LibSocket::Session*> vSessions;
-
-void OnDisconnect2()
-{
-	printf("Client Disconnected\n");
-}
-
-void OnMessage2(std::vector<uint8_t>& v)
-{
-	printf("Process Id: %i\n",*(int*)v.data());
-	vSessions[vSessions.size()-1]->Stop();
-	vSessions.pop_back();
-}
-
-void accept_socket(LibSocket::Session& session)
-{
-	printf("New Socket Accepted\n");
-	vSessions.push_back(&session);
-	std::function<void()> fff(OnDisconnect2);
-	std::function<void(std::vector<uint8_t>&)> ff(OnMessage2);
-	session.LinkFunctions(ff,fff);
-	session.Start();
-}
-
-
-
-
 int WINAPI WinMain(HINSTANCE hInstance,HINSTANCE hPrev,LPSTR lpCommand,int nCmdShow)
 {
 	StartUp();
+	std::cout << "Creating Main Window" << std::endl;
 
-	LibSocket::ServiceProvider servProv;
+	UI::MainWindow mainWindow;
+	mainWindow.Show();
 
-	std::function<void(LibSocket::Session& session)> f(accept_socket);
-	LibSocket::Server serv(f,servProv);
-	serv.Start();
+	nana::gui::exec();
 
-	servProv.Run();
-	printf("Closing Press a Key\n");
-	MessageBox(NULL,L"Close",L"",MB_OK);
 	return 0;
 }

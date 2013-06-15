@@ -12,6 +12,7 @@ namespace Memory
 		std::size_t Size;
 		std::string Text;
 		uint32_t Address;
+		std::vector<uint8_t> Data;
 	};
 
 	class Disassembler
@@ -26,6 +27,9 @@ namespace Memory
 	};
 
 	static Util::Singleton<Disassembler> DisassemblerInstance;
-	static bool CreateDisassemblerInstance();
+	static void CreateDisassemblerInstance()
+	{
+		Memory::DisassemblerInstance.Create(new Disassembler());
+	}
 }
 

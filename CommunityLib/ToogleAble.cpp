@@ -10,8 +10,6 @@ ToogleAble::ToogleAble(void)
 
 ToogleAble::~ToogleAble(void)
 {
-	if(this->m_fStatus)
-		this->Disable();
 }
 
 
@@ -38,7 +36,7 @@ bool ToogleAble::Toogle(bool fToogle)
 	if(this->m_fStatus == fToogle)
 		return false;
 
-	if(fToogle?this->Disable():this->Enable())
+	if(!fToogle?this->disable():this->enable())
 	{
 		this->m_fStatus = fToogle;
 		return true;

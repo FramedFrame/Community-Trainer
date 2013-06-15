@@ -16,7 +16,8 @@ Accessor::~Accessor(void)
 std::vector<uint8_t> Memory::Accessor::Read( uint32_t uAddress,std::size_t uSize )
 {
 	std::vector<uint8_t> vData(uSize);
-	this->read(uAddress,vData);
+	if(!this->read(uAddress,vData))
+		return std::vector<uint8_t>();
 	return vData;
 }
 
@@ -54,7 +55,8 @@ bool Memory::Accessor::Write( uint32_t uAddress,std::size_t uSize,uint8_t uData 
 
 std::vector<Opcode> Memory::Accessor::Disassemble( uint32_t uAddress,std::size_t uSize )
 {
-	return DisassemblerInstance()->DisassembleInstructions(reinterpret_cast<uint8_t*>(uAddress),uSize);
+	auto v = this->Read(uAddress,uSize);
+	return DisassemblerInstance()->DisassembleInstructions(v.data(),uSize);
 }
 
 bool Memory::Accessor::IsReadable(uint32_t uFlag)
@@ -77,6 +79,8 @@ bool  Memory::Accessor::IsWriteable(uint32_t uFlag)
 	if ((uFlag & PAGE_EXECUTE_READ) || (uFlag & PAGE_EXECUTE_READWRITE) ||
 		(uFlag & PAGE_READONLY) || (uFlag & PAGE_READWRITE))
 		return true;
+
+	return false;
 }
 
 
@@ -87,7 +91,7 @@ bool Memory::InternalAccessor::write( uint32_t uAddress,std::vector<uint8_t>& v,
 	MEMORY_BASIC_INFORMATION mbi;
 	memset(&mbi,0,sizeof(MEMORY_BASIC_INFORMATION));
 
-	if(!VirtualQuery(lpvAddress,&mbi,v.size()))
+	if(!VirtualQuery(lpvAddress,&mbi,sizeof(MEMORY_BASIC_INFORMATION)))
 		if(fFlagSet)
 			return false;
 
@@ -118,7 +122,7 @@ bool Memory::InternalAccessor::read( uint32_t uAddress,std::vector<uint8_t>& v,b
 	MEMORY_BASIC_INFORMATION mbi;
 	memset(&mbi,0,sizeof(MEMORY_BASIC_INFORMATION));
 
-	if(!VirtualQuery(lpvAddress,&mbi,v.size()))
+	if(!VirtualQuery(lpvAddress,&mbi,sizeof(MEMORY_BASIC_INFORMATION)))
 		if(fFlagSet)
 			return false;
 
@@ -140,6 +144,7 @@ bool Memory::InternalAccessor::read( uint32_t uAddress,std::vector<uint8_t>& v,b
 		if(!VirtualProtect(lpvAddress,v.size(),uOldProtect,&uOldProtect))
 			return false;
 
+
 	return true;
 }
 
@@ -155,7 +160,7 @@ bool Memory::ProcessAccessor::write( uint32_t uAddress,std::vector<uint8_t>& v,b
 	MEMORY_BASIC_INFORMATION mbi;
 	memset(&mbi,0,sizeof(MEMORY_BASIC_INFORMATION));
 
-	if(!VirtualQueryEx(this->m_hProcess,lpvAddress,&mbi,v.size()))
+	if(!VirtualQueryEx(this->m_hProcess,lpvAddress,&mbi,sizeof(MEMORY_BASIC_INFORMATION)))
 		if(fFlagSet)
 			return false;
 
@@ -192,7 +197,7 @@ bool Memory::ProcessAccessor::read( uint32_t uAddress,std::vector<uint8_t>& v,bo
 	MEMORY_BASIC_INFORMATION mbi;
 	memset(&mbi,0,sizeof(MEMORY_BASIC_INFORMATION));
 
-	if(!VirtualQueryEx(this->m_hProcess,lpvAddress,&mbi,v.size()))
+	if(!VirtualQueryEx(this->m_hProcess,lpvAddress,&mbi,sizeof(MEMORY_BASIC_INFORMATION)))
 		if(fFlagSet)
 			return false;
 
@@ -221,17 +226,3 @@ bool Memory::ProcessAccessor::read( uint32_t uAddress,std::vector<uint8_t>& v,bo
 
 	return true;
 }
-
-
- void CreateAccessorInstance(uint32_t uPar = 0)
- {
-#ifdef CLIENT
-	 HANDLE h = OpenProcess(PROCESS_ALL_ACCESS,FALSE,uPar);
-	 if(h == NULL)
-		 return;//Fail Log
-
-	 AccessorInstance.Create( new BasicAccessor(h));
-#else
-	 AccessorInstance.Create( new BasicAccessor());
-#endif
- }

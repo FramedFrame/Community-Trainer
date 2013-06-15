@@ -73,6 +73,7 @@ Dispatcher::Dispatcher(uint32_t uAddress,uint32_t uDestination,uint32_t* uReturn
 
 Dispatcher::~Dispatcher(void)
 {
+	this->Toogle(false);
 }
 
 bool Dispatcher::enable()

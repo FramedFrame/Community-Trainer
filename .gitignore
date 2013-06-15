@@ -4,3 +4,5 @@
 *.sdf
 *.lastbuildstate
 *.idb
+CommunityClient/Release/CommunityClient.unsuccessfulbuild
+*.unsuccessfulbuild

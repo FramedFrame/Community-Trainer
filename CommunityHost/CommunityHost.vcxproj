@@ -41,13 +41,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\Home\Documents\Community-Trainer\CommunityLib\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Home\Documents\Community-Trainer\Debug;F:\Projects-External\Boost\boost_1_53_0\stage\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>F:\Projects-External\Nanapro\Nana.Cpp11\include;C:\Users\Home\Documents\Community-Trainer\CommunityLib\include;$(IncludePath)</IncludePath>
+    <LibraryPath>F:\Projects-External\Nanapro\Nana.Cpp11\build\bin\vc2012;C:\Users\Home\Documents\Community-Trainer\Debug;F:\Projects-External\Boost\boost_1_53_0\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\Home\Documents\Community-Trainer\CommunityLib\include;$(IncludePath)</IncludePath>
-    <LibraryPath>F:\Projects-External\Boost\boost_1_53_0\stage\lib;C:\Users\Home\Documents\Community-Trainer\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>F:\Projects-External\Nanapro\Nana.Cpp11\include;C:\Users\Home\Documents\Community-Trainer\CommunityLib\include;$(IncludePath)</IncludePath>
+    <LibraryPath>F:\Projects-External\Nanapro\Nana.Cpp11\build\bin\vc2012;F:\Projects-External\Boost\boost_1_53_0\stage\lib;C:\Users\Home\Documents\Community-Trainer\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -61,6 +61,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>nana_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -79,11 +80,21 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>nana_release.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ClientManager.cpp" />
+    <ClCompile Include="Host.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="Session.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ClientManager.h" />
+    <ClInclude Include="Host.h" />
+    <ClInclude Include="MainWindow.h" />
+    <ClInclude Include="Session.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

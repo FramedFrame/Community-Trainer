@@ -53,6 +53,17 @@ namespace Memory
 	typedef InternalAccessor BasicAccessor;
 #endif
 	static Util::Singleton<BasicAccessor> AccessorInstance;
-	static bool CreateAccessorInstance(uint32_t uPar = 0);
+	static void CreateAccessorInstance(uint32_t uPar = 0)
+	{
+#ifdef CLIENT
+			HANDLE h = OpenProcess(PROCESS_ALL_ACCESS,FALSE,uPar);
+			if(h == NULL)
+				return;//Fail Log
+
+			AccessorInstance.Create( new BasicAccessor(h));
+#else
+			AccessorInstance.Create( new BasicAccessor());
+#endif
+	}
 }
 

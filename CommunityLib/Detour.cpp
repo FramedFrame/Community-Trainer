@@ -38,3 +38,24 @@ bool Detour::disable()
 	return SetHook(this->m_context.pFunc,this->m_context.pHook,false);
 }
 
+std::pair<bool,PROCESS_INFORMATION> Detour::CreateProcessWithDll(std::string strExecuteable,std::string strLibary)
+{
+	std::pair<bool,PROCESS_INFORMATION> procResult;
+
+	procResult.first = false;
+
+	STARTUPINFOA startInfo;
+	memset(&startInfo,0,sizeof(STARTUPINFOA));
+	startInfo.cb = sizeof(STARTUPINFOA);
+	
+	PROCESS_INFORMATION processInfo;
+	memset(&procResult.second,0,sizeof(PROCESS_INFORMATION));
+
+	if(!DetourCreateProcessWithDllExA(strExecuteable.c_str(),NULL,NULL,NULL,FALSE,CREATE_DEFAULT_ERROR_MODE,NULL,NULL,&startInfo,
+		&processInfo,strLibary.c_str(),NULL))
+		return procResult;
+
+	procResult.first = true;
+	return procResult;
+}
+

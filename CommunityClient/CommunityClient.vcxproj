@@ -41,13 +41,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>G:\backup\Projects\CommunityProject\CommunityLib\include;$(IncludePath)</IncludePath>
-    <LibraryPath>G:\backup\Projects\CommunityProject\Debug;F:\Projects-External\Boost\boost_1_53_0\stage\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Home\Documents\Community-Trainer\CommunityLib\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Home\Documents\Community-Trainer\Debug;F:\Projects-External\Boost\boost_1_53_0\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>G:\backup\Projects\CommunityProject\CommunityLib\include;$(IncludePath)</IncludePath>
-    <LibraryPath>G:\backup\Projects\CommunityProject\Release;F:\Projects-External\Boost\boost_1_53_0\stage\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Home\Documents\Community-Trainer\CommunityLib\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Home\Documents\Community-Trainer\Release;F:\Projects-External\Boost\boost_1_53_0\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -82,7 +82,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Client.cpp" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Client.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

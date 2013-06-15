@@ -27,23 +27,27 @@ std::vector<Opcode> Disassembler::DisassembleInstructions( uint8_t* pAddy,std::s
 	ud_set_input_buffer(UD_CAST,pAddy,uSize);
 
 	uint8_t* pAddress = pAddy; 
+	std::size_t u = 0;
 
 	while (ud_disassemble(UD_CAST)) 
 	{
+		if(!strcmp(ud_insn_asm(UD_CAST),"invalid"))
+			break;
+
 		Opcode opcode;
 		memset(&opcode,0,sizeof(Opcode));
 
 		opcode.Text = std::string(ud_insn_asm(UD_CAST));
 		opcode.Size = ud_insn_len(UD_CAST);
+		opcode.Address = reinterpret_cast<uint32_t>(pAddress);
 
-		pAddy+= opcode.Size;
+		for(u = 0;u < opcode.Size;u++)
+			opcode.Data.push_back(pAddress[u]);
+
+
+		pAddress+= opcode.Size;
 
 		vOpcodes.push_back(opcode);
 	}
 	return vOpcodes;
-}
-
-static bool CreateDisassemblerInstance()
-{
-	Memory::DisassemblerInstance.Create(new Disassembler());
 }

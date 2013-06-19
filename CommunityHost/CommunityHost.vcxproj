@@ -85,6 +85,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ClientManager.cpp" />
+    <ClCompile Include="ClientManagerControl.cpp" />
+    <ClCompile Include="ClientPanel.cpp" />
     <ClCompile Include="Host.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
@@ -92,6 +94,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClientManager.h" />
+    <ClInclude Include="ClientManagerControl.h" />
+    <ClInclude Include="ClientPanel.h" />
+    <ClInclude Include="Context.h" />
     <ClInclude Include="Host.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="Session.h" />

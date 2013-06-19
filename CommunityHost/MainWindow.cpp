@@ -1,7 +1,15 @@
 #include "MainWindow.h"
+#include "ClientManagerControl.h"
 
 #include <nana\gui\widgets\button.hpp>
 #include <nana\gui\msgbox.hpp>
+
+#include <string>
+#include <iostream>
+#include <Windows.h>
+
+#include "Context.h"
+
 
 using namespace UI;
 using namespace nana::gui;
@@ -11,16 +19,21 @@ MainWindow::MainWindow(void):
 {
 	this->m_form.caption(STR("Community Trainer ~ Host"));
 
-
 	auto btn = new button(m_form,nana::rectangle(5,5,100,20));
 	btn->caption(STR("New Client"));
 	btn->make_event<events::click>(std::bind(&MainWindow::NewClient,this));
 	ADD_WIDGET(MAIN_CONTROL::BUTTON,btn);
+
+	auto clientManager = new UI::ClientManagerControl(this->m_form,nana::rectangle(5,30,480,450));
+	clientManager->background(nana::make_rgb(137,137,137));
+	ADD_WIDGET(MAIN_CONTROL::CLIENT_MANAGER,clientManager);
 }
 
 
 MainWindow::~MainWindow(void)
 {
+	this->m_mapControl.clear();
+
 }
 
 void MainWindow::Show()
@@ -30,16 +43,11 @@ void MainWindow::Show()
 
 void MainWindow::NewClient()
 {
+	ContextInstance->ClientManager->StartClient();
 
-	msgbox msg(this->m_form,STR("Info - Button Clicked"),msgbox::yes_no);
-	msg << STR("Confirm that you want to spawn a new Client");
-	auto x = msg.show();
-
-	if(x == msgbox::pick_yes)
-	{
-		msgbox msg2(this->m_form,STR("Info - Button Clicked"),msgbox::ok);
-		msg2.icon(msgbox::icon_information);
-		msg2 << STR("About to Start the Client...");
-		msg2.show();
-	}
+	auto man = W_CAST(UI::ClientManagerControl,MAIN_CONTROL::CLIENT_MANAGER);
+	auto y = man->Append();
+	y->background(nana::make_rgb(0,0,0));
+	HWND h =FindWindow(NULL,L"MapleStory");
+	y->AttachWindow((native_window_type)h);
 }

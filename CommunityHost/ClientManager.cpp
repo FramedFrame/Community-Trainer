@@ -4,8 +4,10 @@
 #include <CommunityLib/Detour.h>
 
 
-ClientManager::ClientManager(std::string strMaple)
+ClientManager::ClientManager(std::string strMaple,UI::MainWindow* pMainWindow)
 {
+	this->m_pMainWindow = pMainWindow;
+
 	this->m_strMaple = strMaple;
 
 

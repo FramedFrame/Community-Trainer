@@ -5,15 +5,18 @@
 #include <nana\gui\wvl.hpp>
 #include <nana\gui\widgets\widget.hpp>
 
+#include "ClientManager.h"
+#include "Host.h"
 
 #define WIDGET_PTR(__w) (nana::gui::widget*)__w
 #define ADD_WIDGET(__c,__w) this->m_mapControl[__c].reset(WIDGET_PTR(__w));
+#define W_CAST(__t,__c) (__t*)this->m_mapControl[__c].get()
 
 namespace UI
 {
-	enum class MAIN_CONTROL
+	enum class MAIN_CONTROL : uint8_t
 	{
-		INVALID,BUTTON
+		INVALID,BUTTON,CLIENT_MANAGER
 	};
 
 	class MainWindow

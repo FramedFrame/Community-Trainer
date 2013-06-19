@@ -17,11 +17,14 @@
     <ClInclude Include="Dispatcher.h" />
     <ClInclude Include="LibSocket.h" />
     <ClInclude Include="Network.h" />
+    <ClInclude Include="Opcode.h" />
     <ClInclude Include="PatternScanner.h" />
+    <ClInclude Include="Reader.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="Session.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="ToogleAble.h" />
+    <ClInclude Include="Writer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Accessor.cpp" />
@@ -30,9 +33,11 @@
     <ClCompile Include="Dispatcher.cpp" />
     <ClCompile Include="LibSocket.cpp" />
     <ClCompile Include="PatternScanner.cpp" />
+    <ClCompile Include="Reader.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Session.cpp" />
     <ClCompile Include="ToogleAble.cpp" />
+    <ClCompile Include="Writer.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{22B14069-89B6-4A6E-B4C7-44D08DDF9511}</ProjectGuid>

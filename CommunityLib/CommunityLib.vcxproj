@@ -18,11 +18,14 @@
     <ClInclude Include="LibSocket.h" />
     <ClInclude Include="Network.h" />
     <ClInclude Include="Opcode.h" />
+    <ClInclude Include="Packet.h" />
+    <ClInclude Include="PacketToken.h" />
     <ClInclude Include="PatternScanner.h" />
     <ClInclude Include="Reader.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="Session.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="TokenType.h" />
     <ClInclude Include="ToogleAble.h" />
     <ClInclude Include="Writer.h" />
   </ItemGroup>
@@ -32,6 +35,7 @@
     <ClCompile Include="Disassembler.cpp" />
     <ClCompile Include="Dispatcher.cpp" />
     <ClCompile Include="LibSocket.cpp" />
+    <ClCompile Include="Packet.cpp" />
     <ClCompile Include="PatternScanner.cpp" />
     <ClCompile Include="Reader.cpp" />
     <ClCompile Include="Server.cpp" />

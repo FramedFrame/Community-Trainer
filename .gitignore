@@ -4,5 +4,6 @@
 *.sdf
 *.lastbuildstate
 *.idb
+*.suo
 CommunityClient/Release/CommunityClient.unsuccessfulbuild
 *.unsuccessfulbuild

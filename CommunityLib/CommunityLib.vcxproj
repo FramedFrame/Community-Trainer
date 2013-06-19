@@ -17,6 +17,8 @@
     <ClInclude Include="Dispatcher.h" />
     <ClInclude Include="LibSocket.h" />
     <ClInclude Include="Network.h" />
+    <ClInclude Include="Packet.h" />
+    <ClInclude Include="PacketToken.h" />
     <ClInclude Include="PatternScanner.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="Session.h" />
@@ -29,6 +31,7 @@
     <ClCompile Include="Disassembler.cpp" />
     <ClCompile Include="Dispatcher.cpp" />
     <ClCompile Include="LibSocket.cpp" />
+    <ClCompile Include="Packet.cpp" />
     <ClCompile Include="PatternScanner.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Session.cpp" />

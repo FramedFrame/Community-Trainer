@@ -12,7 +12,7 @@
 #include <CommunityLib/Reader.h>
 #include <CommunityLib/Writer.h>
 
-#define MAPLE_PATH "F:\Europe MapleStory for Vista\MapleStory.exe"
+#define MAPLE_PATH "F:\\Europe MapleStory for Vista\\MapleStory.exe"
 
 int StartUp()
 {
@@ -33,8 +33,11 @@ int StartUp()
 
 void ExecuteAsio()
 {
+	ContextInstance->Host->Start();
 	ContextInstance->ServiceProvider->Run();
 }
+std::shared_ptr<Context> ContextInstance;
+
 
 int WINAPI WinMain(HINSTANCE hInstance,HINSTANCE hPrev,LPSTR lpCommand,int nCmdShow)
 {
@@ -43,12 +46,13 @@ int WINAPI WinMain(HINSTANCE hInstance,HINSTANCE hPrev,LPSTR lpCommand,int nCmdS
 
 	ContextInstance.reset(new Context());
 
-	UI::MainWindow mainWindow;
+	ContextInstance->MainWindow.reset(new UI::MainWindow());
+
 	ContextInstance->ServiceProvider.reset(new LibSocket::ServiceProvider());
-	ContextInstance->ClientManager.reset(new ClientManager(MAPLE_PATH,&mainWindow));
+	ContextInstance->ClientManager.reset(new ClientManager(MAPLE_PATH));
 	ContextInstance->Host.reset(new Host(ContextInstance->ClientManager.get(),*ContextInstance->ServiceProvider.get()));
 
-	mainWindow.Show();
+	ContextInstance->MainWindow->Show();
 	std::thread t(ExecuteAsio);
 	
 	nana::gui::exec();

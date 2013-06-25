@@ -1,6 +1,8 @@
 #include "Session.h"
 #include <Windows.h>
 
+#include <iostream>
+
 using namespace Network;
 
 using namespace boost;
@@ -73,12 +75,15 @@ void _Session::Send(std::vector<uint8_t>& vBuffer)
 	memcpy(vSendBuffer->data(),&header,HEADER_SIZE);
 	memcpy(vSendBuffer->data()+HEADER_SIZE,vBuffer.data(),vBuffer.size());
 
+	std::cout << "Sending Bytes: " << vBuffer.size()+2 << std::endl;
+
 	this->m_ptrSocket->async_send(boost::asio::buffer(*vSendBuffer),boost::bind(&_Session::handle_write,
 		this,boost::asio::placeholders::error,vSendBuffer));
 }
 
 void _Session::SendRaw(std::vector<uint8_t>& vBuffer)
 {
+	std::cout << "Sending Bytes Raw: " << vBuffer.size() << std::endl;
 	auto vSendBuffer = new std::vector<uint8_t>(vBuffer.begin(),vBuffer.end());
 	this->m_ptrSocket->async_send(boost::asio::buffer(*vSendBuffer),boost::bind(&_Session::handle_write,
 		this,boost::asio::placeholders::error,vSendBuffer));
@@ -127,17 +132,14 @@ void _Session::handle_read(const boost::system::error_code& error,size_t bytes_t
 
 	if(!error && !this->m_fStop && bytes_transferred)
 	{
-
-		if(this->m_writeState != WRITE_STATE::HEADER)
+		if(this->m_writeState == WRITE_STATE::HANDSHAKE || this->m_writeState == WRITE_STATE::DATA)
 		{
 			this->m_funOnData(this->m_vBuffer);
-		}
-		else
-		{
-			this->m_header = *reinterpret_cast<header_t*>(this->m_vBuffer.data());
+			this->m_header = 0;
 		}
 
 		this->NextState();
+
 
 		boost::asio::async_read(*this->m_ptrSocket.get(),boost::asio::buffer(this->GetBuffer(),this->GetSize()),
 		 boost::bind(&_Session::handle_read, this,
@@ -160,10 +162,10 @@ uint8_t* _Session::GetBuffer()
 	switch(this->m_writeState)
 	{
 	case WRITE_STATE::DATA:
-		this->m_vBuffer.resize(this->m_header);
+		this->m_vBuffer.reserve(this->m_header);
 		return this->m_vBuffer.data();
 	case WRITE_STATE::HANDSHAKE:
-		this->m_vBuffer.resize(4);
+		this->m_vBuffer.reserve(4);
 		return this->m_vBuffer.data();
 	default:
 		return reinterpret_cast<uint8_t*>(&this->m_header);
@@ -176,7 +178,7 @@ int _Session::GetSize()
 	case WRITE_STATE::DATA:
 		return this->m_header;
 	case WRITE_STATE::HANDSHAKE:
-		return 2;
+		return 4;
 	default:
 		return HEADER_SIZE;
 	}

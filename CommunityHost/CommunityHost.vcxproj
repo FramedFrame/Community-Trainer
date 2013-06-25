@@ -93,6 +93,7 @@
     <ClCompile Include="Session.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ClientContext.h" />
     <ClInclude Include="ClientManager.h" />
     <ClInclude Include="ClientManagerControl.h" />
     <ClInclude Include="ClientPanel.h" />

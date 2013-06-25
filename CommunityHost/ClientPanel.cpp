@@ -56,3 +56,7 @@ void UI::ClientPanel::UpdateClient()
 	auto sz = this->m_frame->size();
 	SetWindowPos(hwnd,NULL,0,0,sz.width,sz.height,SWP_NOZORDER|SWP_FRAMECHANGED);
 }
+void UI::ClientPanel::AppendData(std::shared_ptr<ClientContext>& pData)
+{
+	this->m_clientContext = pData;
+}

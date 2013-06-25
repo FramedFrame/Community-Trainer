@@ -4,8 +4,6 @@
 
 #include <nana\gui\wvl.hpp>
 #include <nana\gui\widgets\widget.hpp>
-
-#include "ClientManager.h"
 #include "Host.h"
 
 #define WIDGET_PTR(__w) (nana::gui::widget*)__w

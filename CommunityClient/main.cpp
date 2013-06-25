@@ -1,7 +1,14 @@
-#include <CommunityLib/LibSocket.h>
-#include <functional>
+#include <iostream>
+#include <thread>
 #include <Windows.h>
-#include <memory>
+#include "Context.h"
+
+#include "Client.h"
+
+extern "C" __declspec( dllexport )void NullExport(void)
+{
+	std::cout << "Called Null Export" << std::endl;
+}
 
 int StartUp()
 {
@@ -19,34 +26,42 @@ int StartUp()
 	return 1;
 }
 
-std::shared_ptr<LibSocket::ServiceProvider> serv;
+std::shared_ptr<std::thread> mainThread;
+bool fExit;
 
-void OnDisconnect()
-{
-	printf("Disconnected\n");
-	serv.get()->Stop();
-}
+std::shared_ptr<Context> ContextInstance;
 
-void OnMessage(std::vector<uint8_t>& v)
-{
-	printf("New Message\n");
+void Run()
+{ 
+	StartUp();
+	ContextInstance.reset(new Context());
+
+	ContextInstance->ServiceProvider.reset(new LibSocket::ServiceProvider());
+	ContextInstance->Client.reset(new Client(*ContextInstance->ServiceProvider.get()));
+	
+	ContextInstance->Client->Start();
+	ContextInstance->ServiceProvider->Run();
 }
 
 int WINAPI WinMain(HINSTANCE hInstance,HINSTANCE hPrev,LPSTR lpCommand,int nCmdShow)
 {
+	fExit = false;
 	StartUp();
+	mainThread.reset(new std::thread(Run));
+	
+	while(!fExit)
+		Sleep(500);
 
-	serv.reset(new LibSocket::ServiceProvider());
-	std::function<void()> fff(OnDisconnect);
-	std::function<void(std::vector<uint8_t>&)> ff(OnMessage);
-
-	LibSocket::Session session(*serv.get());
-	session.LinkFunctions(ff,fff);
-	session.StartConnect();
-
-	serv->Run();
-	printf("Exit\n");
-	MessageBoxA(NULL,"Done2","ABC",MB_OK);
-	serv.reset();
 	return 0;
+}
+
+DWORD WINAPI DllMain(HMODULE hModule,DWORD dwReason,LPVOID lpvReversed)
+{
+	switch(dwReason)
+	{
+	case DLL_PROCESS_ATTACH:
+		CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)&Run,NULL,0,NULL);
+		break;
+	}
+	return TRUE;
 }

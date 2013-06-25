@@ -4,11 +4,15 @@
 #include <nana\gui\widgets\button.hpp>
 #include <nana\gui\msgbox.hpp>
 
+#include <CommunityLib\Detour.h>
+
 #include <string>
 #include <iostream>
 #include <Windows.h>
 
+#include "ClientContext.h"
 #include "Context.h"
+
 
 
 using namespace UI;
@@ -43,11 +47,20 @@ void MainWindow::Show()
 
 void MainWindow::NewClient()
 {
-	ContextInstance->ClientManager->StartClient();
+	auto y = std::make_shared<ClientContext>();
+	auto x = ContextInstance->ClientManager->StartClient(y);
+
+	if(!x)
+	{
+		nana::gui::msgbox msgBox(this->m_form,STR("Error"),nana::gui::msgbox::ok);
+		msgBox.icon(nana::gui::msgbox::icon_error);
+		msgBox << STR("Failed to start the Client");
+		msgBox.show();
+		return;
+	}
 
 	auto man = W_CAST(UI::ClientManagerControl,MAIN_CONTROL::CLIENT_MANAGER);
-	auto y = man->Append();
-	y->background(nana::make_rgb(0,0,0));
-	HWND h =FindWindow(NULL,L"MapleStory");
-	y->AttachWindow((native_window_type)h);
+	auto clientPanel = man->Append();
+	clientPanel->AppendData(y);
+	y->Panel = clientPanel;
 }

@@ -2,6 +2,8 @@
 #include <memory>
 
 #include <CommunityLib/LibSocket.h>
+
+struct ClientContext;
 class Session
 {
 public:
@@ -11,6 +13,7 @@ public:
 	void Stop();
 
 	uint32_t operator()();
+	void AppendData(std::shared_ptr<ClientContext>& pData);
 private:
 	std::unique_ptr<LibSocket::Session> m_session;
 	bool m_fIsHandshake;
@@ -20,5 +23,6 @@ private:
 	void OnDisconnect();
 
 	class ClientManager* m_pClientManager;
+	std::shared_ptr<ClientContext> m_clientContext;
 };
 

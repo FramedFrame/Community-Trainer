@@ -51,11 +51,15 @@ std::pair<bool,PROCESS_INFORMATION> Detour::CreateProcessWithDll(std::string str
 	PROCESS_INFORMATION processInfo;
 	memset(&procResult.second,0,sizeof(PROCESS_INFORMATION));
 
+	/*if(!CreateProcessA(strExecuteable.c_str(),NULL,NULL,NULL,FALSE,CREATE_DEFAULT_ERROR_MODE,NULL,NULL,&startInfo,
+		&processInfo))
+		return procResult;*/
 	if(!DetourCreateProcessWithDllExA(strExecuteable.c_str(),NULL,NULL,NULL,FALSE,CREATE_DEFAULT_ERROR_MODE,NULL,NULL,&startInfo,
 		&processInfo,strLibary.c_str(),NULL))
 		return procResult;
 
 	procResult.first = true;
+	procResult.second = processInfo;
 	return procResult;
 }
 

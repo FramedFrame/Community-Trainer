@@ -7,8 +7,6 @@
 #include <vector>
 #include <string>
 #include <sstream>
-#include <iostream>
-#include <Windows.h>
 #include <iterator>
 #include <algorithm>
 #include <cctype>

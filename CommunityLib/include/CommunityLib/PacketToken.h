@@ -4,7 +4,6 @@
  */
 #pragma once
 #include "TokenType.h"
-
 /*
  * PacketToken structure to contain information in an array making it possible 
  * to directly access the token by an index and knowing its type and byte count.

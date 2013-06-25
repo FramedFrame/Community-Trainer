@@ -16,6 +16,7 @@
     <ClInclude Include="Disassembler.h" />
     <ClInclude Include="Dispatcher.h" />
     <ClInclude Include="LibSocket.h" />
+    <ClInclude Include="Map XML Parser.h" />
     <ClInclude Include="Network.h" />
     <ClInclude Include="Opcode.h" />
     <ClInclude Include="Packet.h" />
@@ -28,6 +29,7 @@
     <ClInclude Include="TokenType.h" />
     <ClInclude Include="ToogleAble.h" />
     <ClInclude Include="Writer.h" />
+    <ClInclude Include="XML Parser.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Accessor.cpp" />
@@ -35,6 +37,7 @@
     <ClCompile Include="Disassembler.cpp" />
     <ClCompile Include="Dispatcher.cpp" />
     <ClCompile Include="LibSocket.cpp" />
+    <ClCompile Include="Map XML Parser.cpp" />
     <ClCompile Include="Packet.cpp" />
     <ClCompile Include="PatternScanner.cpp" />
     <ClCompile Include="Reader.cpp" />
@@ -42,6 +45,7 @@
     <ClCompile Include="Session.cpp" />
     <ClCompile Include="ToogleAble.cpp" />
     <ClCompile Include="Writer.cpp" />
+    <ClCompile Include="XML Parser.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{22B14069-89B6-4A6E-B4C7-44D08DDF9511}</ProjectGuid>
@@ -73,12 +77,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>F:\Projects-External\Detours\include;F:\Projects-External\udis86\BuildVS2010\Build\Include;F:\Projects-External\Boost\boost_1_53_0;$(IncludePath)</IncludePath>
-    <LibraryPath>F:\Projects-External\Detours\lib.X86;F:\Projects-External\udis86\BuildVS2010\Build\Lib\Debug\x86;F:\Projects-External\Boost\boost_1_53_0\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DETOURS)\include;$(UDIS86)\Include;$(BOOST);$(IncludePath)</IncludePath>
+    <LibraryPath>$(DETOURS)\lib;$(BOOST)\stage\lib;$(UDIS86)\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>F:\Projects-External\Detours\include;F:\Projects-External\udis86\BuildVS2010\Build\Include;F:\Projects-External\Boost\boost_1_53_0;$(IncludePath)</IncludePath>
-    <LibraryPath>F:\Projects-External\Detours\lib.X86;F:\Projects-External\udis86\BuildVS2010\Build\Lib\x86;F:\Projects-External\Boost\boost_1_53_0\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DETOURS)\include;$(UDIS86)\Include;$(BOOST);$(IncludePath)</IncludePath>
+    <LibraryPath>$(DETOURS)\lib;$(BOOST)\stage\lib;$(UDIS86)\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -94,7 +98,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>libudis86.lib;detours.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>detours.lib;libudis86_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -115,7 +119,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>libudis86.lib;detours.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libudis86_release.lib;detours.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

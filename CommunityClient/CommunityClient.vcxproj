@@ -41,13 +41,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\Home\Documents\Community-Trainer\CommunityLib\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(NANAPRO)\include;$(SolutionDir)\CommunityLib\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\Home\Documents\Community-Trainer\Debug;F:\Projects-External\Boost\boost_1_53_0\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\Home\Documents\Community-Trainer\CommunityLib\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Home\Documents\Community-Trainer\Release;F:\Projects-External\Boost\boost_1_53_0\stage\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(NANAPRO)\include;$(SolutionDir)\CommunityLib\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(BOOST)\stage\lib;$(NANAPRO)\lib;$(SolutionDir)\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

@@ -41,13 +41,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>F:\Projects-External\Nanapro\Nana.Cpp11\include;C:\Users\Home\Documents\Community-Trainer\CommunityLib\include;$(IncludePath)</IncludePath>
-    <LibraryPath>F:\Projects-External\Nanapro\Nana.Cpp11\build\bin\vc2012;C:\Users\Home\Documents\Community-Trainer\Debug;F:\Projects-External\Boost\boost_1_53_0\stage\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(NANAPRO)\include;$(SolutionDir)\CommunityLib\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(BOOST)\stage\lib;$(NANAPRO)\lib;$(SolutionDir)\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>F:\Projects-External\Nanapro\Nana.Cpp11\include;C:\Users\Home\Documents\Community-Trainer\CommunityLib\include;$(IncludePath)</IncludePath>
-    <LibraryPath>F:\Projects-External\Nanapro\Nana.Cpp11\build\bin\vc2012;F:\Projects-External\Boost\boost_1_53_0\stage\lib;C:\Users\Home\Documents\Community-Trainer\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(NANAPRO)\include;$(SolutionDir)\CommunityLib\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(BOOST)\stage\lib;$(NANAPRO)\lib;$(SolutionDir)\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

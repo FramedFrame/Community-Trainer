@@ -2,8 +2,21 @@
  * Written by ChiLaX - ChiLaX1@live.de
  * Revision 1.0
  */
+<<<<<<< HEAD
 #pragma once
 #include "TokenType.h"
+=======
+
+/*
+ * Enumeration of token types.
+ */
+enum pTokenType {
+	nByte, //normal byte - 55, **, ??
+	increment, //increment this byte whenever packet is sent - 55++
+	decrement, //decrement this byte whenever packet is sent - 55--
+	portalcount, //replace with the value of the portal (usage count) pointer
+};
+>>>>>>> 89e9af0bb688f620446ca999dc97e78fec6dbe33
 
 /*
  * PacketToken structure to contain information in an array making it possible 

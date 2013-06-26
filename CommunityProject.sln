@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CommunityLib", "CommunityLi
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test", "Test\Test.vcxproj", "{5A1F4C74-5C55-4C33-8CDE-E90E64A78251}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CommunityUpdater", "CommunityUpdater\CommunityUpdater.vcxproj", "{93833B14-1758-4D5A-AFEC-E9FE8E82792A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -31,6 +33,10 @@ Global
 		{5A1F4C74-5C55-4C33-8CDE-E90E64A78251}.Debug|Win32.Build.0 = Debug|Win32
 		{5A1F4C74-5C55-4C33-8CDE-E90E64A78251}.Release|Win32.ActiveCfg = Release|Win32
 		{5A1F4C74-5C55-4C33-8CDE-E90E64A78251}.Release|Win32.Build.0 = Release|Win32
+		{93833B14-1758-4D5A-AFEC-E9FE8E82792A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{93833B14-1758-4D5A-AFEC-E9FE8E82792A}.Debug|Win32.Build.0 = Debug|Win32
+		{93833B14-1758-4D5A-AFEC-E9FE8E82792A}.Release|Win32.ActiveCfg = Release|Win32
+		{93833B14-1758-4D5A-AFEC-E9FE8E82792A}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

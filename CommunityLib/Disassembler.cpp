@@ -3,7 +3,11 @@
 
 #define UD_CAST static_cast<ud*>(this->m_pUdis)
 
+
 using namespace Memory;
+
+std::shared_ptr<Disassembler> Disassembler::Instance;
+
 
 Disassembler::Disassembler(void)
 {
@@ -41,8 +45,9 @@ std::vector<Opcode> Disassembler::DisassembleInstructions( uint8_t* pAddy,std::s
 		opcode.Size = ud_insn_len(UD_CAST);
 		opcode.Address = reinterpret_cast<uint32_t>(pAddress);
 
+		opcode.Data.reset(new std::vector<uint8_t>());
 		for(u = 0;u < opcode.Size;u++)
-			opcode.Data.push_back(pAddress[u]);
+			opcode.Data->push_back(pAddress[u]);
 
 
 		pAddress+= opcode.Size;

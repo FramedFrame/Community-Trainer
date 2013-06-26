@@ -1,0 +1,2 @@
+aob:E8 ?? ?? ?? ?? 8B 06 8B 48 ?? 56 C6 45 ?? ?? FF D1 8B 75 ?? 43,name:someAob,result:0,Offset:0
+aob:E8 ?? ?? ?? ?? 8B 06 8B 48 08 56 C7 44 24 34 FF FF FF FF FF D1 8B 4C 24 28 64 89 0D 00 00 00 00 59 5F 5E 5D 83 C4 24,name:someAob2,result:0,Offset:0

@@ -41,7 +41,7 @@ Dispatcher::Dispatcher(uint32_t uAddress,uint32_t uDestination,uint32_t* uReturn
 	this->m_uAddress = uAddress;
 
 
-	auto x = DisassemblerInstance()->DisassembleInstructions(reinterpret_cast<uint8_t*>(uAddress),20);
+	auto x = Memory::Disassembler::Instance->DisassembleInstructions(reinterpret_cast<uint8_t*>(uAddress),20);
 
 	if(!x.size())
 		return;//To do make some error message
@@ -80,16 +80,16 @@ bool Dispatcher::enable()
 {
 	if(!this->m_vBackup.size())
 	{
-		this->m_vBackup = Memory::AccessorInstance()->Read(this->m_uAddress,this->m_vEnableBytes.size());
+		this->m_vBackup = BasicAccessor::Instance->Read(this->m_uAddress,this->m_vEnableBytes.size());
 		if(!this->m_vBackup.size())
 			return false;
 	}
-	return Memory::AccessorInstance()->Write(this->m_uAddress,this->m_vEnableBytes);
+	return BasicAccessor::Instance->Write(this->m_uAddress,this->m_vEnableBytes);
 }
 
 bool Dispatcher::disable()
 {
-	return Memory::AccessorInstance()->Write(this->m_uAddress,this->m_vBackup);
+	return BasicAccessor::Instance->Write(this->m_uAddress,this->m_vBackup);
 }
 
 

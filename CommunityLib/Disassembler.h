@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include <stdint.h>
 #include <string>
 #include <vector>
@@ -12,7 +13,7 @@ namespace Memory
 		std::size_t Size;
 		std::string Text;
 		uint32_t Address;
-		std::vector<uint8_t> Data;
+		std::shared_ptr<std::vector<uint8_t>> Data;
 	};
 
 	class Disassembler
@@ -21,15 +22,16 @@ namespace Memory
 		Disassembler(void);
 		~Disassembler(void);
 
+		static std::shared_ptr<Disassembler> Instance;
+
 		std::vector<Opcode> DisassembleInstructions(uint8_t* pAddy,std::size_t uSize);
 	private:
 		void* m_pUdis;
 	};
 
-	static Util::Singleton<Disassembler> DisassemblerInstance;
 	static void CreateDisassemblerInstance()
 	{
-		Memory::DisassemblerInstance.Create(new Disassembler());
+		Memory::Disassembler::Instance.reset(new Disassembler());
 	}
 }
 

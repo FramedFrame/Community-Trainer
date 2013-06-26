@@ -199,11 +199,11 @@ matched:
 }
 std::vector<int> PatternScanner::GenerateBadTable(Pattern& pattern)
 {
-	std::vector<int> vBadSuffixTable(UCHAR_MAX);
+	std::vector<int> vBadSuffixTable(UCHAR_MAX+1);
 
 	size_t uSize = pattern.vPattern.size();
 
-	for(int i = 0; i < UCHAR_MAX;i++)
+	for(int i = 0; i < UCHAR_MAX+1;i++)
 		vBadSuffixTable[i] = uSize;
 
 	for(size_t u = 0;u < pattern.vPattern.size();u++)

@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include <stdint.h>
 #include <vector>
 #include <Windows.h>
@@ -31,6 +32,8 @@ namespace Memory
 
 	class InternalAccessor : public Accessor
 	{
+	public:
+		static std::shared_ptr<InternalAccessor> Instance;
 	protected:
 		virtual bool write(uint32_t,std::vector<uint8_t>&,bool);
 		virtual bool read(uint32_t,std::vector<uint8_t>&,bool);
@@ -40,6 +43,9 @@ namespace Memory
 	{
 	public:
 		ProcessAccessor(HANDLE hProcess);
+
+		static std::shared_ptr<ProcessAccessor> Instance;
+
 	protected:
 		virtual bool write(uint32_t,std::vector<uint8_t>&,bool);
 		virtual bool read(uint32_t,std::vector<uint8_t>&,bool);
@@ -52,18 +58,18 @@ namespace Memory
 #else
 	typedef InternalAccessor BasicAccessor;
 #endif
-	static Util::Singleton<BasicAccessor> AccessorInstance;
 	static void CreateAccessorInstance(uint32_t uPar = 0)
 	{
 #ifdef CLIENT
 			HANDLE h = OpenProcess(PROCESS_ALL_ACCESS,FALSE,uPar);
-			if(h == NULL)
+			if(h == NULL || h == INVALID_HANDLE_VALUE)
 				return;//Fail Log
 
-			AccessorInstance.Create( new BasicAccessor(h));
+			auto x = new BasicAccessor(h);
 #else
-			AccessorInstance.Create( new BasicAccessor());
+			auto x =  new BasicAccessor();
 #endif
+			BasicAccessor::Instance.reset(x);
 	}
 }
 

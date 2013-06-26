@@ -4,6 +4,8 @@
 
 using namespace Memory;
 
+Util::Singleton<BasicAccessor> AccessorInstance;
+
 Accessor::Accessor(void)
 {
 }
@@ -56,7 +58,7 @@ bool Memory::Accessor::Write( uint32_t uAddress,std::size_t uSize,uint8_t uData 
 std::vector<Opcode> Memory::Accessor::Disassemble( uint32_t uAddress,std::size_t uSize )
 {
 	auto v = this->Read(uAddress,uSize);
-	return DisassemblerInstance()->DisassembleInstructions(v.data(),uSize);
+	return  Memory::Disassembler::Instance->DisassembleInstructions(v.data(),uSize);
 }
 
 bool Memory::Accessor::IsReadable(uint32_t uFlag)
@@ -83,7 +85,7 @@ bool  Memory::Accessor::IsWriteable(uint32_t uFlag)
 	return false;
 }
 
-
+std::shared_ptr<InternalAccessor> Memory::InternalAccessor::Instance;
 bool Memory::InternalAccessor::write( uint32_t uAddress,std::vector<uint8_t>& v,bool fFlagSet)
 {
 	LPVOID lpvAddress = reinterpret_cast<LPVOID>(uAddress);
@@ -148,6 +150,7 @@ bool Memory::InternalAccessor::read( uint32_t uAddress,std::vector<uint8_t>& v,b
 	return true;
 }
 
+std::shared_ptr<ProcessAccessor> Memory::ProcessAccessor::Instance;
 Memory::ProcessAccessor::ProcessAccessor( HANDLE hProcess )
 {
 	this->m_hProcess = hProcess;

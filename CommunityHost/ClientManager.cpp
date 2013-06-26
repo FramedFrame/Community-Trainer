@@ -17,6 +17,7 @@ ClientManager::ClientManager(std::string strMaple)
 	if(!GetCurrentDirectoryA(1024,szDirBuffer))
 		return;
 
+
 	//this->m_strLibary = std::string(szDirBuffer);
 
 	//this->m_strLibary += "\\Libary\\CommunityClient.dll";

@@ -2,14 +2,16 @@
 
 #include "ClientManager.h"
 #include "ClientContext.h"
+#include "Context.h"
+
 #include <CommunityLib\Reader.h>
 #include <CommunityLib\Opcode.h>
 
+#include <iostream>
 
-Session::Session(ClientManager* pClientManager,LibSocket::Session& session)
+
+Session::Session(LibSocket::Session& session)
 {
-	this->m_pClientManager = pClientManager;
-
 	this->m_session.reset(&session);
 	this->m_fIsHandshake = true;
 
@@ -35,7 +37,7 @@ void Session::OnMessage( std::vector<uint8_t> vMessage )
 	{
 		this->m_uProcessId = *reinterpret_cast<uint32_t*>(vMessage.data());
 		this->m_fIsHandshake = false;
-		if(!this->m_pClientManager->NewSession(*this))
+		if(!ContextInstance->ClientManager->NewSession(*this))
 			this->Stop();
 		return;
 	}
@@ -48,8 +50,10 @@ void Session::OnMessage( std::vector<uint8_t> vMessage )
 		{
 		case ClientOpcode::WINDOW_HANDLE:
 			this->m_clientContext->Window = reinterpret_cast<HWND>(reader.Read<uint32_t>());
-			this->m_clientContext->Panel->AttachWindow((nana::gui::native_window_type)this->m_clientContext->Window);
 			break;
+		case ClientOpcode::WINDOW_SHOWN:
+			this->m_clientContext->Panel->AttachWindow((nana::gui::native_window_type)this->m_clientContext->Window);
+			std::cout << "Shown Window" << std::endl;
 		}
 	}
 	catch(std::exception* ex)
@@ -60,7 +64,7 @@ void Session::OnMessage( std::vector<uint8_t> vMessage )
 
 void Session::OnDisconnect()
 {
-	this->m_pClientManager->SessionDisconnect(*this);
+	ContextInstance->ClientManager->SessionDisconnect(*this);
 }
 
 uint32_t Session::operator()()

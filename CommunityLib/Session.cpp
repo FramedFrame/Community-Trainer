@@ -162,10 +162,10 @@ uint8_t* _Session::GetBuffer()
 	switch(this->m_writeState)
 	{
 	case WRITE_STATE::DATA:
-		this->m_vBuffer.reserve(this->m_header);
+		this->m_vBuffer.resize(this->m_header);
 		return this->m_vBuffer.data();
 	case WRITE_STATE::HANDSHAKE:
-		this->m_vBuffer.reserve(4);
+		this->m_vBuffer.resize(4);
 		return this->m_vBuffer.data();
 	default:
 		return reinterpret_cast<uint8_t*>(&this->m_header);

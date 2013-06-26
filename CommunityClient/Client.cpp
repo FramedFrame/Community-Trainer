@@ -6,10 +6,11 @@
 #include <Windows.h>
 
 MAKE_API_PTR(CreateWindowExA,pfnCreateWindowExA);
+MAKE_API_PTR(ShowWindow,pfnShowWindow);
 
-Client::Client(LibSocket::ServiceProvider& serviceProvider)
+Client::Client()
 {
-	this->m_session.reset(new LibSocket::Session(serviceProvider));
+	this->m_session.reset(new LibSocket::Session(*ContextInstance->ServiceProvider.get()));
 	this->m_session->LinkFunctions(std::bind(&Client::OnMessage,this,std::placeholders::_1),
 		std::bind(&Client::OnDisconnect,this));
 
@@ -20,12 +21,26 @@ Client::Client(LibSocket::ServiceProvider& serviceProvider)
 		std::cout << "Some Window Created: " << strWindowClass << std::endl;
 		if(!strWindowClass.compare("MapleStoryClass"))
 		{
+			ContextInstance->Window = hWnd;
 			IO::Writer writer;
 		    writer << (int8_t)ClientOpcode::WINDOW_HANDLE << hWnd;
 			ContextInstance->Client->Send(writer());
 			std::cout << "Maple Window: " << hWnd << std::endl;
 		}
 		return hWnd;	
+	})));
+
+	this->m_detourShowWindow.reset(new Memory::Detour(MAKE_CTX(pfnShowWindow,[](HWND hWnd,int nCmdShow)->BOOL{
+		BOOL b = pfnShowWindow(hWnd,nCmdShow);
+		if(hWnd == ContextInstance->Window && nCmdShow == SW_SHOW &&  !ContextInstance->Shown)
+		{
+			IO::Writer writer;
+			writer << (int8_t)ClientOpcode::WINDOW_SHOWN;
+			ContextInstance->Client->Send(writer());
+			std::cout << "Shown Maple Window: " << hWnd << std::endl;
+			ContextInstance->Shown = true;
+		}
+		return b;	
 	})));
 }
 
@@ -37,6 +52,7 @@ Client::~Client(void)
 void Client::Start()
 {
 	this->m_detourWindow->Enable();
+	this->m_detourShowWindow->Enable();
 	this->m_session->StartConnect();
 }
 

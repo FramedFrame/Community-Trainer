@@ -41,12 +41,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(NANAPRO)\include;$(SolutionDir)\CommunityLib\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(NANAPRO)\include\;$(SolutionDir)\CommunityLib\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(BOOST)\stage\lib;$(NANAPRO)\lib;$(SolutionDir)\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(NANAPRO)\include;$(SolutionDir)\CommunityLib\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(NANAPRO)\include\;$(SolutionDir)\CommunityLib\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(BOOST)\stage\lib;$(NANAPRO)\lib;$(SolutionDir)\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

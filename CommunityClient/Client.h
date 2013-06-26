@@ -11,7 +11,7 @@
 class Client
 {
 public:
-	Client(LibSocket::ServiceProvider& serviceProvider);
+	Client();
 	~Client(void);
 
 	void Start();
@@ -20,7 +20,7 @@ public:
 	void Send(std::vector<uint8_t>& vData);
 private:
 	std::unique_ptr<LibSocket::Session> m_session;
-	std::shared_ptr<Memory::Detour> m_detourWindow;
+	std::shared_ptr<Memory::Detour> m_detourWindow,m_detourShowWindow;
 
 	void OnMessage(std::vector<uint8_t> vMessage);
 	void OnDisconnect();

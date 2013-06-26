@@ -35,9 +35,10 @@ void Run()
 { 
 	StartUp();
 	ContextInstance.reset(new Context());
+	ZeroMemory(ContextInstance.get(),sizeof(Context));
 
 	ContextInstance->ServiceProvider.reset(new LibSocket::ServiceProvider());
-	ContextInstance->Client.reset(new Client(*ContextInstance->ServiceProvider.get()));
+	ContextInstance->Client.reset(new Client());
 	
 	ContextInstance->Client->Start();
 	ContextInstance->ServiceProvider->Run();

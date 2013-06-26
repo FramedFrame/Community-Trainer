@@ -3,9 +3,10 @@
 
 #include <CommunityLib/LibSocket.h>
 
+#include "MainWindow.h"
+
 #include "ClientManager.h"
 #include "Host.h"
-#include "MainWindow.h"
 
 struct Context
 {

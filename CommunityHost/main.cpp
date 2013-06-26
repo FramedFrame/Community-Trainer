@@ -50,7 +50,7 @@ int WINAPI WinMain(HINSTANCE hInstance,HINSTANCE hPrev,LPSTR lpCommand,int nCmdS
 
 	ContextInstance->ServiceProvider.reset(new LibSocket::ServiceProvider());
 	ContextInstance->ClientManager.reset(new ClientManager(MAPLE_PATH));
-	ContextInstance->Host.reset(new Host(ContextInstance->ClientManager.get(),*ContextInstance->ServiceProvider.get()));
+	ContextInstance->Host.reset(new Host());
 
 	ContextInstance->MainWindow->Show();
 	std::thread t(ExecuteAsio);

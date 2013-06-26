@@ -1,10 +1,11 @@
 #pragma once
 #include <memory>
 #include <CommunityLib/LibSocket.h>
+
 class Host
 {
 public:
-	Host(class ClientManager* pClientManager,LibSocket::ServiceProvider& serviceProvider);
+	Host();
 	~Host(void);
 
 	void Start();
@@ -13,6 +14,5 @@ public:
 	void NewSession(LibSocket::Session& session);
 private:
 	std::unique_ptr<LibSocket::Server> m_server;
-	class ClientManager* m_pClientManager;
 };
 

@@ -7,7 +7,7 @@ struct ClientContext;
 class Session
 {
 public:
-	Session(class ClientManager* pClientManager,LibSocket::Session& session);
+	Session(LibSocket::Session& session);
 	~Session(void);
 
 	void Stop();
@@ -22,7 +22,6 @@ private:
 	void OnMessage(std::vector<uint8_t> vMessage);
 	void OnDisconnect();
 
-	class ClientManager* m_pClientManager;
 	std::shared_ptr<ClientContext> m_clientContext;
 };
 

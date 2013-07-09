@@ -9,11 +9,18 @@ namespace IO
 	class Reader
 	{
 	public:
-		Reader(std::vector<uint8_t> &vData);
-		~Reader(void);
+		Reader(std::vector<uint8_t> &vData) :
+			m_vData(vData.begin(),vData.end())
+		{
+			this->m_uIndex = 0;
+		}
+		~Reader(void)
+		{
 
-		void ResetIndex();
-		uint32_t& operator()();
+		}
+
+		virtual void ResetIndex();
+		virtual uint32_t& operator()();
 
 		template<typename T>
 		bool TryRead(T& tValue,uint32_t uIndex=-1)
@@ -56,14 +63,14 @@ namespace IO
 			return *this;
 		}
 
-		bool TryReadString(std::string &str,uint32_t uIndex = -1);
-		std::string ReadString(uint32_t uIndex = -1);
+		virtual bool TryReadString(std::string &str,uint32_t uIndex = -1);
+		virtual std::string ReadString(uint32_t uIndex = -1);
 
 	private:
 		std::vector<uint8_t> m_vData;
 		uint32_t m_uIndex;
 
-		bool CanRead(uint32_t nIndex,uint32_t uSize);
+		virtual bool CanRead(uint32_t nIndex,uint32_t uSize);
 
 		inline void ReadStringProxy(void* p)
 		{

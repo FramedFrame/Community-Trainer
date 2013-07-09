@@ -3,15 +3,6 @@
 #include <iostream>
 
 
-IO::Reader::Reader( std::vector<uint8_t> &vData ) :
-	m_vData(vData.begin(),vData.end())
-{
-	this->m_uIndex = 0;
-}
-IO::Reader::~Reader()
-{
-
-}
 void IO::Reader::ResetIndex()
 {
 	this->m_uIndex = 0;

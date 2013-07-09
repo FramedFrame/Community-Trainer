@@ -10,9 +10,6 @@ namespace IO
 	class Writer
 	{
 	public:
-		Writer(void);
-		~Writer(void);
-
 		template<typename T>
 		void Write(T tValue)
 		{
@@ -21,7 +18,7 @@ namespace IO
 			for(uint32_t u = 0; u < x;u++)
 				this->m_vData.push_back(pData[u]);
 		}
-		void WriteString(std::string str);
+		virtual void WriteString(std::string str);
 
 
 		template<typename T>
@@ -35,7 +32,7 @@ namespace IO
 			return *this;
 		}
 
-		std::vector<uint8_t>& operator()();
+		virtual std::vector<uint8_t>& operator()();
 	private:
 		std::vector<uint8_t> m_vData;
 

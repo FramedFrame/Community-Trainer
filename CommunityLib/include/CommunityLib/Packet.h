@@ -19,11 +19,27 @@ using namespace std;
  */
 class Packet {
 public:
-	Packet(string iPacket); //constructor
-	~Packet(); //destructor
+	Packet(string iPacket)
+	{
+			this->sPacket = iPacket;
+			transform(this->sPacket.begin(), this->sPacket.end(),this->sPacket.begin(), ::toupper);
 
-	bool tokenize();
-	vector<PacketToken> getTokens();
+			stringstream ss(this->sPacket);
+			string item;
+			while (getline(ss, item, ' ')) {
+				if (!item.empty())
+					elems.push_back(item);
+			}
+
+			this->length = elems.size();
+	}
+	~Packet()
+	{
+
+	}
+
+	virtual bool tokenize();
+	vector<PacketToken>& getTokens();
 
 private:
 	string sPacket; //input string defining the packet

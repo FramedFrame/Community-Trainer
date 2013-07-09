@@ -1,17 +1,14 @@
 #include "Dispatcher.h"
 #include "Accessor.h"
-#include <stdarg.h>
 
 using namespace Memory;
 
-Dispatcher::Dispatcher( uint32_t uAddress,std::vector<uint8_t>& vEnableBytes ) :
-	m_vEnableBytes(vEnableBytes.begin(),vEnableBytes.end())
+void Dispatcher::Init( uint32_t uAddress,std::vector<uint8_t>& vEnableBytes )
 {
 	this->m_uAddress = uAddress;
 }
 
-Dispatcher::Dispatcher( uint32_t uAddress,std::size_t uSize,... ) :
-	m_vEnableBytes(uSize)
+void Dispatcher::Init( uint32_t uAddress,std::size_t uSize,va_list args )
 {
 	this->m_uAddress = uAddress;
 
@@ -27,8 +24,7 @@ Dispatcher::Dispatcher( uint32_t uAddress,std::size_t uSize,... ) :
 
 }
 
-Dispatcher::Dispatcher( uint32_t uAddress,std::size_t uSize,uint8_t uData ) :
-	m_vEnableBytes(uSize)
+void Dispatcher::Init( uint32_t uAddress,std::size_t uSize,uint8_t uData )
 {
 	this->m_uAddress = uAddress;
 
@@ -36,7 +32,7 @@ Dispatcher::Dispatcher( uint32_t uAddress,std::size_t uSize,uint8_t uData ) :
 		this->m_vEnableBytes.push_back(uData);
 }
 
-Dispatcher::Dispatcher(uint32_t uAddress,uint32_t uDestination,uint32_t* uReturn,Instruction instr)
+void Dispatcher::Init(uint32_t uAddress,uint32_t uDestination,uint32_t* uReturn,Instruction instr)
 {
 	this->m_uAddress = uAddress;
 
@@ -71,7 +67,7 @@ Dispatcher::Dispatcher(uint32_t uAddress,uint32_t uDestination,uint32_t* uReturn
 }
 
 
-Dispatcher::~Dispatcher(void)
+void Dispatcher::Free(void)
 {
 	this->Toogle(false);
 }

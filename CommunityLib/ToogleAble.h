@@ -4,12 +4,19 @@ namespace Memory
 class ToogleAble
 {
 public:
-	ToogleAble(void);
-	~ToogleAble(void);
-	bool Enable(void);
-	bool Disable(void);
-	bool Toogle(void);
-	bool Toogle(bool fToogle);
+	ToogleAble(void)
+	{
+		this->m_fStatus = false;
+	}
+	~ToogleAble(void)
+	{
+
+	}
+	virtual bool Enable(void);
+	virtual bool Disable(void);
+	virtual bool Toogle(void);
+	virtual bool Toogle(bool fToogle);
+	virtual bool Status();
 protected:
 	virtual bool enable(void)=0;
 	virtual bool disable(void)=0;

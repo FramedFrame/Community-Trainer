@@ -8,21 +8,19 @@ using namespace Memory;
 
 std::shared_ptr<Disassembler> Disassembler::Instance;
 
-
-Disassembler::Disassembler(void)
+void Disassembler::Init()
 {
 	this->m_pUdis = static_cast<void*>(new ud_t());
 	ud_init(UD_CAST);
 	ud_set_mode(UD_CAST,32);
 	ud_set_syntax(UD_CAST,UD_SYN_INTEL);
 }
-
-
-Disassembler::~Disassembler(void)
+void Disassembler::Free()
 {
 	ud_t* pUd = UD_CAST;
 	delete pUd;
 }
+
 
 std::vector<Opcode> Disassembler::DisassembleInstructions( uint8_t* pAddy,std::size_t uSize )
 {

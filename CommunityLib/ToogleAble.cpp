@@ -2,16 +2,6 @@
 
 using namespace Memory;
 
-ToogleAble::ToogleAble(void)
-{
-	this->m_fStatus = false;
-}
-
-
-ToogleAble::~ToogleAble(void)
-{
-}
-
 
 bool ToogleAble::Enable(void)
 {
@@ -44,3 +34,7 @@ bool ToogleAble::Toogle(bool fToogle)
 	return false;
 }
 
+bool ToogleAble::Status()
+{
+	return this->m_fStatus;
+}

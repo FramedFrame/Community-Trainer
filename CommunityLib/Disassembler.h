@@ -19,14 +19,23 @@ namespace Memory
 	class Disassembler
 	{
 	public:
-		Disassembler(void);
-		~Disassembler(void);
+		Disassembler(void)
+		{
+			this->Init();
+		}
+		~Disassembler(void)
+		{
+			this->Free();
+		}
 
 		static std::shared_ptr<Disassembler> Instance;
 
-		std::vector<Opcode> DisassembleInstructions(uint8_t* pAddy,std::size_t uSize);
+		virtual std::vector<Opcode> DisassembleInstructions(uint8_t* pAddy,std::size_t uSize);
 	private:
 		void* m_pUdis;
+
+		virtual void Init();
+		virtual void Free();
 	};
 
 	static void CreateDisassemblerInstance()

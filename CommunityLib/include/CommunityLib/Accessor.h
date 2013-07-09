@@ -12,22 +12,28 @@ namespace Memory
 	class Accessor
 	{
 	public:
-		Accessor(void);
-		~Accessor(void);
+		Accessor(void)
+		{
 
-		std::vector<uint8_t> Read(uint32_t uAddress,std::size_t uSize);
-		bool Write(uint32_t uAddress,std::vector<uint8_t>& vData);
-		bool Write(uint32_t uAddress,std::size_t uSize,...);
-		bool Write(uint32_t uAddress,std::size_t uSize,uint8_t uData);
+		}
+		~Accessor(void)
+		{
 
-		std::vector<Opcode> Disassemble(uint32_t uAddress,std::size_t uSize);
+		}
+
+		virtual std::vector<uint8_t> Read(uint32_t uAddress,std::size_t uSize);
+		virtual bool Write(uint32_t uAddress,std::vector<uint8_t>& vData);
+		virtual bool Write(uint32_t uAddress,std::size_t uSize,...);
+		virtual bool Write(uint32_t uAddress,std::size_t uSize,uint8_t uData);
+
+		virtual std::vector<Opcode> Disassemble(uint32_t uAddress,std::size_t uSize);
 
 	protected:
 		virtual bool write(uint32_t,std::vector<uint8_t>&,bool = true) = 0;
 		virtual bool read(uint32_t,std::vector<uint8_t>&,bool = true) = 0;
 
-		bool IsReadable(uint32_t uFlag);
-		bool IsWriteable(uint32_t uFlag);
+		virtual bool IsReadable(uint32_t uFlag);
+		virtual bool IsWriteable(uint32_t uFlag);
 	};
 
 	class InternalAccessor : public Accessor
@@ -42,7 +48,10 @@ namespace Memory
 	class ProcessAccessor : public Accessor
 	{
 	public:
-		ProcessAccessor(HANDLE hProcess);
+		ProcessAccessor(HANDLE hProcess)
+		{
+			this->m_hProcess = hProcess;
+		}
 
 		static std::shared_ptr<ProcessAccessor> Instance;
 

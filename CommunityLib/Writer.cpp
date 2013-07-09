@@ -2,15 +2,6 @@
 
 using namespace IO;
 
-Writer::Writer(void)
-{
-}
-
-
-Writer::~Writer(void)
-{
-}
-
 void Writer::WriteString( std::string str )
 {
 	uint16_t uSize = str.size();

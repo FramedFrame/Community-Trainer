@@ -12,9 +12,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Accessor.h" />
+    <ClInclude Include="Any.h" />
     <ClInclude Include="Detour.h" />
     <ClInclude Include="Disassembler.h" />
     <ClInclude Include="Dispatcher.h" />
+    <ClInclude Include="FunctionPool.h" />
+    <ClInclude Include="Host.h" />
+    <ClInclude Include="HostStruct.h" />
     <ClInclude Include="LibSocket.h" />
     <ClInclude Include="Map XML Parser.h" />
     <ClInclude Include="Network.h" />
@@ -22,12 +26,15 @@
     <ClInclude Include="Packet.h" />
     <ClInclude Include="PacketToken.h" />
     <ClInclude Include="PatternScanner.h" />
+    <ClInclude Include="Module.h" />
+    <ClInclude Include="Info.h" />
     <ClInclude Include="Reader.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="Session.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="TokenType.h" />
     <ClInclude Include="ToogleAble.h" />
+    <ClInclude Include="VariablePool.h" />
     <ClInclude Include="Writer.h" />
     <ClInclude Include="XML Parser.h" />
   </ItemGroup>
@@ -36,14 +43,18 @@
     <ClCompile Include="Detour.cpp" />
     <ClCompile Include="Disassembler.cpp" />
     <ClCompile Include="Dispatcher.cpp" />
+    <ClCompile Include="FunctionPool.cpp" />
+    <ClCompile Include="Host.cpp" />
     <ClCompile Include="LibSocket.cpp" />
     <ClCompile Include="Map XML Parser.cpp" />
     <ClCompile Include="Packet.cpp" />
     <ClCompile Include="PatternScanner.cpp" />
+    <ClCompile Include="Module.cpp" />
     <ClCompile Include="Reader.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Session.cpp" />
     <ClCompile Include="ToogleAble.cpp" />
+    <ClCompile Include="VariablePool.cpp" />
     <ClCompile Include="Writer.cpp" />
     <ClCompile Include="XML Parser.cpp" />
   </ItemGroup>

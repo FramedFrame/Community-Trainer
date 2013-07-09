@@ -16,33 +16,6 @@ bool isNumeric(string s)
 	return true;
 }
 
-/*
- * Constructor which receives a string as an input parameter and then 
- * splits it into all elements separated by whitespaces. 
- * It also saves the length = number of elements.
- */
-Packet::Packet(string iPacket)
-{
-	this->sPacket = iPacket;
-	transform(this->sPacket.begin(), this->sPacket.end(),this->sPacket.begin(), ::toupper);
-
-	stringstream ss(this->sPacket);
-    string item;
-    while (getline(ss, item, ' ')) {
-		if (!item.empty())
-			elems.push_back(item);
-    }
-
-	this->length = elems.size();
-}
-
-/*
- * Destructor
- */
-Packet::~Packet()
-{
-
-}
 
 /*
  * Parses the elements of the string vector into tokens (and bytes).
@@ -176,6 +149,6 @@ bool Packet::tokenize()
 /*
  * Returns the vector containing the tokens.
  */
-vector<PacketToken> Packet::getTokens() {
+vector<PacketToken>& Packet::getTokens() {
 	return this->tokens;
 }

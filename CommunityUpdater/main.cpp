@@ -20,6 +20,8 @@ const char* MASK_FILE = "C:\\Users\\Home\\Documents\\Community-Trainer\\Debug\\M
 
 std::vector<uint8_t> vMemDump;
 
+bool Error;
+
 std::string strMask;
 
 struct Pattern
@@ -32,17 +34,6 @@ struct Pattern
 
 std::vector<Pattern> vPattern;
 
-
-std::string Convert(std::wstring& wstr)
-{
-	std::string str;
-	str.resize(wstr.size());
-
-
-	//std::wcstombs((char*)str.data(),wstr.data(),wstr.size());
-
-	return str;
-}
 
 std::vector<std::string> SplitString(std::string& str,char split)
 {
@@ -209,17 +200,35 @@ HMODULE GetRemoteModuleHandle(DWORD lpProcessId, LPCWSTR lpModule)
 			return me32.hModule;
 		}
 	}
+	Error = true;
 	return NULL;;
 }
 void DoDump()
 {
 	auto xx = FindProcessId((wchar_t*)PROCESS_NAME);
 
+	if(xx == -1)
+	{
+		Error = true;
+		return;
+	}
+
 	HANDLE h = OpenProcess(PROCESS_ALL_ACCESS,FALSE,xx);
+
+	if(h == INVALID_HANDLE_VALUE)
+	{
+		Error = true;
+		return;
+	}
 
 	MODULEINFO modIf;
 	ZeroMemory(&modIf,sizeof(MODULEINFO));
 	HMODULE hModule = GetRemoteModuleHandle(xx,L"MapleStory.exe");
+	if(hModule == NULL)
+	{
+		Error = true;
+		return;
+	}
 	GetModuleInformation(h,hModule,&modIf,sizeof(MODULEINFO));
 
 	vMemDump.resize(modIf.SizeOfImage);
@@ -231,6 +240,20 @@ void DoDump()
 	return;
 }
 
+int CalculateAddy(int nResult)
+{
+	int pAddy = (int)vMemDump.data();
+	return (nResult - pAddy)+0x400000;
+}
+
+#define jmp(frm, to) (int)(((int)to - (int)frm) - 5);
+//1337=x-99 - 5/+5
+//1337+5/+99
+//1337 + 5 + 99=x
+int ReverseCall(int n,int addy)
+{
+	return n + 5 + addy;
+}
 void DoScan()
 {
 	Memory::PatternScanner pat;
@@ -239,26 +262,97 @@ void DoScan()
 	src.uLen = vMemDump.size();
 	pat.SetSource(src);
 
-	for(auto pp:vPattern)
+	for(auto &pp:vPattern)
 	{
+		cout << "Scanning Pattern: " << pp.Name << endl;
 		Memory::Pattern p = Memory::PatternScanner::GeneratePattern(pp.Aob);
 		p.uTakeResult = pp.Result;
 		auto yy = pat.GetResult(p);
-		int pAddy1 = (int)yy[0];
-		int pAddy2 = (int)vMemDump.data();
-		int pAddy3 = (pAddy1 - pAddy2)+0x400000;
-		cout << "Found Result: " << std::hex << (pAddy3);
+
+		if(!yy.size())
+		{
+			cout << "No Result for: " << pp.Name << endl;
+			pp.FinalResult = -1;
+			continue;
+		}
+		int nAddy = CalculateAddy((int)yy[0]);
+
+		if(pp.Offset != 0)
+			nAddy += pp.Offset;
+
+		if(pp.TakeData)
+		{
+			if(pp.Size > 4)
+				cout << "Size isn't allowed to be greater then 4!" << endl;
+
+			if(pp.Size == 4)
+			{
+				int n = 0;
+				char* pAddy = (char*)&n;
+				char* pSrc = (char*)yy[0];
+				pSrc += pp.Offset;
+				memcpy(pAddy,pSrc,pp.Size);
+				nAddy = n;
+			}
+			else if(pp.Size == 2)
+			{
+				short n = 0;
+				char* pAddy = (char*)&n;
+				char* pSrc = (char*)yy[0];
+				pSrc += pp.Offset;
+				memcpy(pAddy,pSrc,pp.Size);
+				nAddy = n;
+			}
+			else if(pp.Size == 1)
+			{
+				char n = 0;
+				char* pAddy = (char*)&n;
+				char* pSrc = (char*)yy[0];
+				pSrc += pp.Offset;
+				memcpy(pAddy,pSrc,pp.Size);
+				nAddy = n;
+			}
+			else
+				cout << "Unknown Size: " << pp.Size << endl;
+		}
+		if(pp.ReverseCall)
+		{
+			int n = 0;
+			char* pSrc = (char*)yy[0];
+			pSrc += pp.Offset;
+			memcpy(&n,pSrc+1,4);
+			nAddy = ReverseCall(n,nAddy);
+		}
+
+		pp.FinalResult = nAddy;
 	}
 	return;
+}
+void DoPrint()
+{
+	char cc[1024];
+	for(auto pp:vPattern)
+	{
+		sprintf_s(cc,strMask.c_str(),pp.Name.c_str(),pp.FinalResult);
+		std::cout << cc << endl;
+
+	}
 }
 
 int main()
 {
+	Error = false;
 	cout << "Community Updater -> Reads from file Aob.txt and Mask.txt" << endl;
 	ReadMask();
 	ReadPatterns();
 	DoDump();
+	if(Error)
+	{
+		return EXIT_SUCCESS;
+	}
 	DoScan();
+
+	DoPrint();
 
 	getchar();
 	return EXIT_SUCCESS;

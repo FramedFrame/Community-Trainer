@@ -5,16 +5,6 @@
 using namespace Memory;
 
 Util::Singleton<BasicAccessor> AccessorInstance;
-
-Accessor::Accessor(void)
-{
-}
-
-
-Accessor::~Accessor(void)
-{
-}
-
 std::vector<uint8_t> Memory::Accessor::Read( uint32_t uAddress,std::size_t uSize )
 {
 	std::vector<uint8_t> vData(uSize);
@@ -151,10 +141,6 @@ bool Memory::InternalAccessor::read( uint32_t uAddress,std::vector<uint8_t>& v,b
 }
 
 std::shared_ptr<ProcessAccessor> Memory::ProcessAccessor::Instance;
-Memory::ProcessAccessor::ProcessAccessor( HANDLE hProcess )
-{
-	this->m_hProcess = hProcess;
-}
 
 bool Memory::ProcessAccessor::write( uint32_t uAddress,std::vector<uint8_t>& v,bool fFlagSet)
 {

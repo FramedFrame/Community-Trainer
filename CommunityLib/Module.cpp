@@ -1,11 +1,14 @@
 #include "Module.h"
 
+#include "Host.h"
+
 using namespace Plugin;
 
-Plugin::Module::Module( std::string str )
+Plugin::Module::Module( std::string str, Plugin::HostStruct* host )
 {
 	this->m_strPath = str;
 	this->m_pluginModule = NULL;
+	this->m_hostStruct = host;
 }
 Plugin::Module::~Module( void )
 {
@@ -38,7 +41,8 @@ bool Plugin::Module::Load()
 		return false;
 	}
 	
-	this->m_pluginInfo->EntryPoint(NULL);
+	this->m_pluginInfo->EntryPoint(this->m_hostStruct);
+	return true;
 }
 bool Plugin::Module::Free()
 {

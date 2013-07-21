@@ -8,7 +8,13 @@
 
 #include "Any.h"
 
-//#define POOL_FUNCTION(x) Plugin::any x(parameter_t& vParameter)
+//Generates a Parameter Vector
+#define PAR_ARRAY(__type,__name,...) __type __nameArray[] = {__VA_ARGS__};\
+	std::vector<__type> __name(__nameArray,__nameArray + sizeof(__nameArray) / sizeof(__type))
+
+//nana::any IMPL
+#define ANY_ARRAY(__name,...) PAR_ARRAY(Util::nana::any,__name,__VA_ARGS__)
+
 
 namespace Plugin
 {

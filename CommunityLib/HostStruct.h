@@ -8,6 +8,7 @@
 
 #include "Any.h"
 #include "FunctionPool.h"
+#include "PluginPool.h"
 #include "VariablePool.h"
 
 namespace Plugin
@@ -23,5 +24,6 @@ namespace Plugin
 	{
 		std::shared_ptr<FunctionPool> functionPool;
 		std::shared_ptr<VariablePool> variablePool;
+		std::shared_ptr<PluginPool> pluginPool;
 	};
 }

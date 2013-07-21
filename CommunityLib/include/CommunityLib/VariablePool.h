@@ -31,6 +31,7 @@ namespace Plugin
 		{
 			return GetModuleHandle(NULL);
 		}
+
 		template<typename T>
 		void DeleteObject(void* pObject)
 		{
@@ -44,8 +45,8 @@ namespace Plugin
 			unique_lock<mutex>(this->m_mtxLock);
 			if(this->m_mapVariablePool.find(str) == this->m_mapVariablePool.end())
 			{
-				auto x = reinterpret_cast<shared_ptr<int>>(&tValue);
-				this->m_mapVariablePool[str] = make_pair(this->GetModule(),x);
+				auto x = reinterpret_cast<shared_ptr<int>*>(&tValue);
+				this->m_mapVariablePool[str] = make_pair(this->GetModule(),*x);
 				return true;
 			}
 			return false;
@@ -71,7 +72,7 @@ namespace Plugin
 			auto y = this->m_mapVariablePool.find(str);
 			if(y != this->m_mapVariablePool.end())
 			{
-				auto x = reinterpret_cast<shared_ptr<T>*>(y->second.second);
+				auto x = reinterpret_cast<shared_ptr<T>*>(&(y->second.second));
 				return (*x).get();
 			}
 			return NULL;
@@ -84,7 +85,7 @@ namespace Plugin
 			auto y = this->m_mapVariablePool.find(str);
 			if(y != this->m_mapVariablePool.end())
 			{
-				auto x = reinterpret_cast<shared_ptr<T>*>(y->second.second);
+				auto x = reinterpret_cast<shared_ptr<T>*>(&(y->second.second));
 				t = *((*x).get());
 				return true;
 			}

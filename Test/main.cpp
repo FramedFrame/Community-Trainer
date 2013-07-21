@@ -1080,10 +1080,18 @@ void DoV8(std::string str)
 
 }
 
+#define PAR_ARRAY(__type,__name,...) __type __nameArray[] = {__VA_ARGS__};\
+	std::vector<__type> __name(__nameArray,__nameArray + sizeof(__nameArray) / sizeof(__type))
+
+
 int main()
 {
-	MakeMap();
-	DoV8("print('abc'); 'Hello' + ', World!'; function test_function(str1,str2) { return str1 + str2; } ");//Script
+	PAR_ARRAY(std::string,vv,"nnn","nnn","sdasd");
+
+	for(auto& s:vv)
+		std::cout << s << std::endl;
+// 	MakeMap();
+// 	DoV8("print('abc'); 'Hello' + ', World!'; function test_function(str1,str2) { return str1 + str2; } ");//Script
 
 	getchar();
 	return 0;

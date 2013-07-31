@@ -14,6 +14,10 @@ namespace IO
 		{
 			this->m_uIndex = 0;
 		}
+		Reader()
+		{
+			this->m_uIndex = 0;
+		}
 		~Reader(void)
 		{
 
@@ -46,7 +50,7 @@ namespace IO
 		T Read(uint32_t uIndex = -1)
 		{
 			T t;
-			ZeroMemory(&t,sizeof(T));
+			memset(&t,0,sizeof(T));
 			if(TryRead(t,uIndex))
 				return t;
 			else

@@ -8,6 +8,11 @@ using namespace Memory;
 
 std::shared_ptr<Disassembler> Disassembler::Instance;
 
+Disassembler::~Disassembler()
+{
+	this->Free();
+}
+
 void Disassembler::Init()
 {
 	this->m_pUdis = static_cast<void*>(new ud_t());

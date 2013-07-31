@@ -24,10 +24,7 @@ namespace Memory
 		{
 			this->m_context = detourContext;
 		}
-		~Detour(void)
-		{
-
-		}
+		virtual ~Detour(void);
 #ifndef PLUGIN
 		static std::pair<bool,PROCESS_INFORMATION> CreateProcessWithDll(std::string strExecuteable,std::string strLibary);
 #endif
@@ -45,10 +42,7 @@ namespace Memory
 		DetourList(void)
 		{
 		}
-		~DetourList(void)
-		{
-
-		}
+		virtual ~DetourList(void);
 
 		virtual void Add(DetourContext& dCtx);
 		virtual void Remove(DetourContext& dCtx);

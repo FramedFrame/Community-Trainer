@@ -16,10 +16,6 @@ namespace Memory
 		{
 
 		}
-		~Accessor(void)
-		{
-
-		}
 
 		virtual std::vector<uint8_t> Read(uint32_t uAddress,std::size_t uSize);
 		virtual bool Write(uint32_t uAddress,std::vector<uint8_t>& vData);
@@ -62,14 +58,14 @@ namespace Memory
 		HANDLE m_hProcess;
 	};
 
-#ifdef CLIENT
+#ifdef SERVER
 	typedef ProcessAccessor BasicAccessor;
 #else
 	typedef InternalAccessor BasicAccessor;
 #endif
 	static void CreateAccessorInstance(uint32_t uPar = 0)
 	{
-#ifdef CLIENT
+#ifdef SERVER
 			HANDLE h = OpenProcess(PROCESS_ALL_ACCESS,FALSE,uPar);
 			if(h == NULL || h == INVALID_HANDLE_VALUE)
 				return;//Fail Log

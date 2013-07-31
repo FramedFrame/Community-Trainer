@@ -13,6 +13,8 @@
   <ItemGroup>
     <ClInclude Include="Accessor.h" />
     <ClInclude Include="Any.h" />
+    <ClInclude Include="Carrier.h" />
+    <ClInclude Include="Connection.h" />
     <ClInclude Include="Detour.h" />
     <ClInclude Include="Disassembler.h" />
     <ClInclude Include="Dispatcher.h" />
@@ -33,6 +35,7 @@
     <ClInclude Include="Server.h" />
     <ClInclude Include="Session.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Template.h" />
     <ClInclude Include="TokenType.h" />
     <ClInclude Include="ToogleAble.h" />
     <ClInclude Include="VariablePool.h" />
@@ -41,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Accessor.cpp" />
+    <ClCompile Include="Connection.cpp" />
     <ClCompile Include="Detour.cpp" />
     <ClCompile Include="Disassembler.cpp" />
     <ClCompile Include="Dispatcher.cpp" />
@@ -55,6 +59,7 @@
     <ClCompile Include="Reader.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Session.cpp" />
+    <ClCompile Include="Template.cpp" />
     <ClCompile Include="ToogleAble.cpp" />
     <ClCompile Include="VariablePool.cpp" />
     <ClCompile Include="Writer.cpp" />
@@ -90,11 +95,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(DETOURS)\include;$(UDIS86)\Include;$(BOOST);$(IncludePath)</IncludePath>
+    <IncludePath>$(DETOURS)\include;$(UDIS86)\Include;$(BOOST);$(RAPIDJSON)\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(DETOURS)\lib;$(BOOST)\stage\lib;$(UDIS86)\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(DETOURS)\include;$(UDIS86)\Include;$(BOOST);$(IncludePath)</IncludePath>
+    <IncludePath>$(DETOURS)\include;$(UDIS86)\Include;$(BOOST);$(RAPIDJSON)\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(DETOURS)\lib;$(BOOST)\stage\lib;$(UDIS86)\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

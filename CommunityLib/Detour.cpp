@@ -45,6 +45,11 @@ bool SetHook(std::vector<DetourContext>& vDetourCtx,bool f)
 	return false;
 }
 
+Detour::~Detour()
+{
+
+}
+
 bool Detour::enable()
 {
 	return SetHook(this->m_context,true);
@@ -73,6 +78,11 @@ std::pair<bool,PROCESS_INFORMATION> Detour::CreateProcessWithDll(std::string str
 	procResult.first = true;
 	procResult.second = processInfo;
 	return procResult;
+}
+
+DetourList::~DetourList()
+{
+
 }
 
 void Memory::DetourList::Add( DetourContext& dCtx )

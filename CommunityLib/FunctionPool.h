@@ -18,12 +18,10 @@
 
 namespace Plugin
 {
-	using namespace std;
-
 	typedef Util::nana::any any;
-	typedef vector<any> parameter_t;
-	typedef function<any(parameter_t&)> poolfunction_t;
-	typedef unordered_map<string,pair<HMODULE,poolfunction_t>> functionpool_t;
+	typedef std::vector<any> parameter_t;
+	typedef std::function<any(parameter_t&)> poolfunction_t;
+	typedef std::unordered_map<std::string,std::pair<HMODULE,poolfunction_t>> functionpool_t;
 
 	class FunctionPool
 	{
@@ -41,15 +39,16 @@ namespace Plugin
 			return GetModuleHandle(NULL);
 		}
 
-		virtual bool Add(string str,poolfunction_t p);
-		virtual bool Remove(string str);
+		virtual bool Add(std::string str,poolfunction_t p);
+		virtual bool Remove(std::string str);
 		virtual void Clear();
 		virtual void ClearModule(HMODULE hModule);
 		
-		virtual poolfunction_t* operator()(string str);
+		virtual poolfunction_t* operator()(std::string str);
+		virtual poolfunction_t* Get(std::string str);
 	private:
 		functionpool_t m_mapFunctionPool;
-		mutex m_mtxLock;
+		std::mutex m_mtxLock;
 	
 	};
 }

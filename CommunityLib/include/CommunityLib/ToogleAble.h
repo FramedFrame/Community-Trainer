@@ -8,10 +8,7 @@ public:
 	{
 		this->m_fStatus = false;
 	}
-	~ToogleAble(void)
-	{
 
-	}
 	virtual bool Enable(void);
 	virtual bool Disable(void);
 	virtual bool Toogle(void);

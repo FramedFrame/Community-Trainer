@@ -22,10 +22,6 @@ namespace Memory
 		{
 			this->m_fUseBuffer = false;
 		}
-		~PatternScanner(void)
-		{
-
-		}
 
 		virtual void SetSource(Source& source);
 		virtual void* GetSource();
@@ -165,12 +161,12 @@ namespace Memory
 			size_t uSize = pattern.vPattern.size();
 
 			std::vector<int> vGoodSuffixTable(uSize+1);
-			int i = 0;
-			for (int j = 0; j <= uSize; j++) 
+			size_t i = 0;
+			for (size_t j = 0; j <= uSize; j++) 
 			{
 				for (i = uSize - 1; i >= 1; i--) 
 				{
-					for (int k = 1; k <= j; k++) 
+					for (size_t k = 1; k <= j; k++) 
 					{
 						if (i - k < 0)
 							break;
@@ -210,7 +206,7 @@ matched:
 			uint8_t* pData = (uint8_t*)source.pStart;
 
 			pLen--;
-			int i = pLen, j = 0;
+			size_t i = pLen, j = 0;
 			while (i < sLen) 
 			{
 				j = 0;

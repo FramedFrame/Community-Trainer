@@ -25,7 +25,8 @@ namespace Plugin
 
 		bool Call(PluginFunction func);
 
-		Info* operator()();
+		Info& operator()();
+		Info& Get();
 	private:
 		HMODULE m_pluginModule;
 		Info* m_pluginInfo;

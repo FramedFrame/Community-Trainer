@@ -23,10 +23,7 @@ namespace Memory
 		{
 			this->Init();
 		}
-		~Disassembler(void)
-		{
-			this->Free();
-		}
+		virtual ~Disassembler();
 
 		static std::shared_ptr<Disassembler> Instance;
 

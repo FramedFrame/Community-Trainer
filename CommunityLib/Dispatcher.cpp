@@ -3,12 +3,18 @@
 
 using namespace Memory;
 
+Dispatcher::~Dispatcher(void)
+{
+
+}
+
 void Dispatcher::Init( uint32_t uAddress,std::vector<uint8_t>& vEnableBytes )
 {
 	this->m_uAddress = uAddress;
+	this->m_vEnableBytes = vEnableBytes;
 }
 
-void Dispatcher::Init( uint32_t uAddress,std::size_t uSize,va_list args )
+void Dispatcher::Init( uint32_t uAddress,std::size_t uSize,... )
 {
 	this->m_uAddress = uAddress;
 
@@ -21,6 +27,8 @@ void Dispatcher::Init( uint32_t uAddress,std::size_t uSize,va_list args )
 		uByte = va_arg(va,uint8_t);
 		this->m_vEnableBytes.push_back(uByte);
 	}
+
+	va_end(va);
 
 }
 

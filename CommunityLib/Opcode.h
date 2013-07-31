@@ -1,5 +1,10 @@
 #pragma once
 
+enum class Opcode
+{
+	INVALID,INTERNAL
+};
+
 //Client Opcode Set
 enum class ClientOpcode
 {

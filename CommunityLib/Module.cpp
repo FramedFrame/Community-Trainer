@@ -83,7 +83,12 @@ bool Plugin::Module::Call( PluginFunction func )
 	}
 }
 
-Info* Plugin::Module::operator()()
+Plugin::Info& Plugin::Module::operator()()
 {
-	return this->m_pluginInfo;
+	return *this->m_pluginInfo;
+}
+
+Plugin::Info& Plugin::Module::Get()
+{
+	return *this->m_pluginInfo;
 }

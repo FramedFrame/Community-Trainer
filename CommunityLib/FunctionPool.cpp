@@ -1,6 +1,6 @@
 #include "FunctionPool.h"
 
-#define LOCK() unique_lock<mutex>(this->m_mtxLock)
+#define LOCK() std::unique_lock<std::mutex>(this->m_mtxLock)
 
 using namespace std;
 
@@ -48,6 +48,11 @@ void Plugin::FunctionPool::ClearModule( HMODULE hModule )
 }
 
 Plugin::poolfunction_t* Plugin::FunctionPool::operator()( string str )
+{
+	return this->Get(str);
+}
+
+Plugin::poolfunction_t* Plugin::FunctionPool::Get(string str)
 {
 	LOCK();
 	auto y = this->m_mapFunctionPool.find(str);

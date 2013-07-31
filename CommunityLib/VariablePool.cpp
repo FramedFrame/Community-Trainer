@@ -1,6 +1,6 @@
 #include "VariablePool.h"
 
-#define LOCK() unique_lock<mutex>(this->m_mtxLock)
+#define LOCK() std::unique_lock<std::mutex>(this->m_mtxLock)
 
 void Plugin::VariablePool::Clear()
 {
@@ -11,7 +11,7 @@ void Plugin::VariablePool::Clear()
 void Plugin::VariablePool::ClearModule( HMODULE hModule )
 {
 	LOCK();
-	std::vector<string> vErase;
+	std::vector<std::string> vErase;
 	for(auto& x:this->m_mapVariablePool)
 	{
 		if(x.second.first == hModule)

@@ -13,6 +13,13 @@
 #include "ClientContext.h"
 #include "Context.h"
 
+#include <CommunityLib\Writer.h>
+#include <CommunityLib\Reader.h>
+
+#include <CommunityLib\Accessor.h>
+#include <CommunityLib\Detour.h>
+#include <CommunityLib\Dispatcher.h>
+
 
 
 using namespace UI;
@@ -63,4 +70,40 @@ void MainWindow::NewClient()
 	auto clientPanel = man->Append();
 	clientPanel->AppendData(y);
 	y->Panel = clientPanel;
+	y->Memory.reset(new Memory::BasicAccessor(y->Process));
+	y->Host.reset(new Plugin::Host());
+	InitHost(*y->Host.get(),*y.get());
+	
+}
+
+
+template<typename T> Util::nana::any PluginCtor(Plugin::parameter_t& p)
+{
+	return std::make_shared<T>();
+}
+template<typename T> Util::nana::any PluginCtor1(Plugin::parameter_t& p)
+{
+	if(p.size() < 1)
+		throw std::exception("Invalid Parameter Amount");
+	return std::make_shared<T>(p[0]);
+}
+
+void MainWindow::InitHost(Plugin::Host& host,ClientContext &clientCtx)
+{
+	using namespace Plugin;
+	using namespace Util::nana;
+
+	auto& var = *host()->variablePool.get();
+	var("IsHost",std::make_shared<int>(1));
+	var("IsClient",std::make_shared<int>(0));
+	var("MemoryAccessor",clientCtx.Memory);
+
+	auto& func = *host()->functionPool.get();
+	func.Add("Writer",PluginCtor<IO::Writer>);
+	func.Add("Reader",PluginCtor<IO::Reader>);
+	func.Add("ReaderFromData",PluginCtor1<IO::Reader>);
+
+	func.Add("Detour",PluginCtor1<Memory::Detour>);
+	func.Add("DetourList",PluginCtor<Memory::DetourList>);
+	func.Add("Dispatcher",PluginCtor<Memory::Dispatcher>);
 }

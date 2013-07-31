@@ -7,9 +7,6 @@
 
 namespace Plugin
 {
-	using namespace std;
-
-
 	typedef std::vector<std::string> pluginPool_t;
 
 	class PluginPool

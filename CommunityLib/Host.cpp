@@ -1,5 +1,10 @@
 #include "Host.h"
 
+#include "Detour.h"
+#include "Dispatcher.h"
+#include "Reader.h"
+#include "Writer.h"
+
 Plugin::Host::Host( void )
 {
 	this->m_hostStruct.reset(new HostStruct());
@@ -60,3 +65,19 @@ std::shared_ptr<Plugin::HostStruct> Plugin::Host::operator()()
 	return this->m_hostStruct;
 }
 
+std::shared_ptr<Plugin::HostStruct> Plugin::Host::Get()
+{
+	return this->m_hostStruct;
+}
+
+void Plugin::Host::Init(Plugin::Host& host)
+{
+	auto& func = *host()->functionPool.get();
+	func.Add("Writer",PluginCtor<IO::Writer>);
+	func.Add("Reader",PluginCtor<IO::Reader>);
+	func.Add("ReaderFromData",PluginCtor1<IO::Reader>);
+
+	func.Add("Detour",PluginCtor1<Memory::Detour>);
+	func.Add("DetourList",PluginCtor<Memory::DetourList>);
+	func.Add("Dispatcher",PluginCtor<Memory::Dispatcher>);
+}

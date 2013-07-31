@@ -1,6 +1,7 @@
 #include "PluginPool.h"
 
 using namespace Plugin;
+using namespace std;
 
 bool PluginPool::Require(std::string strName)
 {

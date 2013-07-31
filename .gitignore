@@ -7,3 +7,4 @@
 *.suo
 CommunityClient/Release/CommunityClient.unsuccessfulbuild
 *.unsuccessfulbuild
+*.opensdf

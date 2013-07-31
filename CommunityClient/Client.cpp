@@ -7,6 +7,7 @@
 
 MAKE_API_PTR(CreateWindowExA,pfnCreateWindowExA);
 MAKE_API_PTR(ShowWindow,pfnShowWindow);
+MAKE_API_PTR(FreeConsole,pfnFreeConsole);
 
 Client::Client()
 {
@@ -16,8 +17,12 @@ Client::Client()
 
 	this->m_detourWindow.reset(new Memory::Detour(MAKE_CTX(pfnCreateWindowExA,[](DWORD dwExStyle,LPCSTR lpClassName,LPCSTR lpWindowName,DWORD dwStyle,
 		int x,int y,int nWidth,int nHeight,HWND hWndParent,HMENU hMenu,HINSTANCE hInstance,LPVOID lpParam)->HWND{
-		HWND hWnd = pfnCreateWindowExA(dwExStyle,lpClassName,lpWindowName,dwStyle,x,y,nWidth,nHeight,hWndParent,hMenu,hInstance,lpParam);	
+
 		std::string strWindowClass = std::string(lpClassName);
+		if(!strWindowClass.compare("StartUpDlgClass"))
+			return NULL;
+
+		HWND hWnd = pfnCreateWindowExA(dwExStyle,lpClassName,lpWindowName,dwStyle,x,y,nWidth,nHeight,hWndParent,hMenu,hInstance,lpParam);	
 		std::cout << "Some Window Created: " << strWindowClass << std::endl;
 		if(!strWindowClass.compare("MapleStoryClass"))
 		{
@@ -42,6 +47,10 @@ Client::Client()
 		}
 		return b;	
 	})));
+
+	this->m_detourFreeConsole.reset(new Memory::Detour(MAKE_CTX(pfnFreeConsole,[]()->BOOL{
+		return TRUE;
+	})));
 }
 
 
@@ -53,6 +62,7 @@ void Client::Start()
 {
 	this->m_detourWindow->Enable();
 	this->m_detourShowWindow->Enable();
+	this->m_detourFreeConsole->Enable();
 	this->m_session->StartConnect();
 }
 

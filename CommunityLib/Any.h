@@ -70,25 +70,35 @@ namespace Util
 			template<typename T>
 			any(const T & obj)
 				: super_(new object_type<typename std::remove_reference<T>::type>(obj))
-			{}
+			{
+				str_ = typeid(T).name();
+			}
 
 			template<typename T>
 			any(T && obj)
 				: super_(new object_type<typename std::remove_reference<T>::type>(std::move(obj)))
-			{}
+			{
+				str_ = typeid(T).name();
+			}
 
 			any()
 				:super_(nullptr)
-			{}
+			{
+				str_ = "";
+			}
 
 			any(const any& rhs)
 				:super_(rhs.super_ ? rhs.super_->clone() : nullptr)
-			{}
+			{
+				str_ = rhs.str_;
+			}
 
 			any(any&& r)
 				:super_(r.super_)
 			{
 				r.super_ = nullptr;
+				str_ = r.str_;
+				r.str_ = "";
 			}
 
 			~any()
@@ -102,6 +112,7 @@ namespace Util
 				{
 					delete super_;
 					super_ = (rhs.super_ ? rhs.super_->clone() : nullptr);
+					str_ = rhs.str_;
 				}
 				return *this;	
 			}
@@ -112,7 +123,9 @@ namespace Util
 				{
 					delete super_;
 					super_ = r.super_;
+					str_ = r.str_;
 					r.super_ = nullptr;
+					r.str_ = "";
 				}
 				return *this;
 			}
@@ -128,6 +141,12 @@ namespace Util
 				}
 				return true;
 			}
+			
+			template<typename T>
+			bool same()
+			{
+				return !str_.compare(typeid(T).name());
+			}
 
 			template<typename T>
 			any& operator=(T const &rhs)
@@ -140,6 +159,9 @@ namespace Util
 				}
 				else
 					*obj = rhs;
+
+				this->str_ = typeid(T).name();
+
 				return *this;
 			}
 
@@ -155,6 +177,9 @@ namespace Util
 				}
 				else
 					*obj = std::move(rhs);
+
+				this->str_ = typeid(T).name();
+
 				return *this;
 			}
 
@@ -190,6 +215,7 @@ namespace Util
 			}
 		private:
 			super_type * super_;
+			std::string str_;
 		};
 	}//end namespace nana
 }

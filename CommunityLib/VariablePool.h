@@ -43,7 +43,7 @@ namespace Plugin
 			std::unique_lock<std::mutex>(this->m_mtxLock);
 			if(this->m_mapVariablePool.find(str) == this->m_mapVariablePool.end())
 			{
-				auto x = reinterpret_caststd::<shared_ptr<int>*>(&tValue);
+				auto x = reinterpret_cast<shared_ptr<int>*>(&tValue);
 				this->m_mapVariablePool[str] = std::make_pair(this->GetModule(),*x);
 				return true;
 			}
